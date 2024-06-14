@@ -2,6 +2,7 @@
 
 # dependencies
 /reactjs/node_modules
+
 /reactjs/.pnp
 /reactjs/.pnp.js
 
@@ -21,3 +22,18 @@
 /reactjs/npm-debug.log*
 /reactjs/yarn-debug.log*
 /reactjs/yarn-error.log*
+
+/native/node_modules/
+/native/.expo/
+/native/dist/
+/native/npm-debug.*
+/native/*.jks
+/native/*.p8
+/native/*.p12
+/native/*.key
+/native/*.mobileprovision
+/native/*.orig.*
+/native/web-build/
+
+# macOS
+/native/.DS_Store
