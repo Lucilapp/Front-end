@@ -11,7 +11,8 @@ const Paragraph = (props) => {
             marginTop: props.marginTop,
             marginBottom: props.marginBottom,
             marginLeft: props.marginLeft,
-            marginRight: props.marginRight
+            marginRight: props.marginRight,
+            margin: props.margin
             
         }}>
             {props.text}</p>
