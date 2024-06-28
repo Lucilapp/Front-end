@@ -25,14 +25,15 @@ export default function HomeScreen() {
     const [results, setResults] = useState(categories);
     return (
       <>
-        <SafeAreaView>
+        <SafeAreaView style={styles.safeAreaView}>
           <View style={styles.row}>
             <SearchBar categories = {initialCat} setResults = {setResults}/>
             <CategoryFilter style={styles.filter} setResults = {setResults}/>
           </View>
           <View style={styles.main}>
-            <CategoryList style={styles.categoryList} categories = {results}/>
+            <CategoryList categories = {results}/>
           </View>
+          <View style={styles.footer}/>
         </SafeAreaView>
         
       </>
@@ -43,6 +44,9 @@ export default function HomeScreen() {
     main: {
       flex: 1,
       minHeight:1000,
+    },
+    safeAreaView:{
+      marginTop: 10
     },
     row: {
       display: 'flex',
@@ -60,5 +64,8 @@ export default function HomeScreen() {
     stepContainer: {
       gap: 8,
       marginBottom: 8,
+    },
+    footer: {
+      height: 20,
     },
   });

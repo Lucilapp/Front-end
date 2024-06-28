@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import TaskScreen from '@/app/(home)/[category]';
+import TaskScreen from '@/app/task/[category]';
 import { useRouter } from 'expo-router';
 
 const CategoryItem = ({ name, pending, time }) => {
