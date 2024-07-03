@@ -17,9 +17,9 @@ export default function TaskScreen(props) {
     }
   }
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.safeAreaView}>
 
-      <Link href="/">
+      <Link href="/" style={{height:30, marginTop:10}}>
         <Image source={require('../../assets/images/arrowLeft.png')} style={styles.backButton} />
       </Link>
 
@@ -50,6 +50,16 @@ export default function TaskScreen(props) {
   );
 }
 const styles = StyleSheet.create({
+  safeAreaView:{
+    marginTop: 30,
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: '5%',
+    width: '90%',
+    padding: 20,
+    backgroundColor: '#F5F5F5',
+  },
   container: {
     flex: 1,
     display: 'flex',
@@ -73,6 +83,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginBottom: 20,
+    marginTop: 10,
   },
   headerText: {
     fontSize: 24,

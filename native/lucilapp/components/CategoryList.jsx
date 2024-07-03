@@ -6,7 +6,7 @@ import { Link } from 'expo-router';
 
 const CategoryList = (props) => (
     <View style={styles.container}>
-        <FlatList
+        <FlatList nestedScrollEnabled
         data={props.categories}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
