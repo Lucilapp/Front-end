@@ -1,11 +1,9 @@
 import { Image, StyleSheet, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
-import CategoryList from '../../components/CategoryList.jsx';
+import CategoryList from '../../components/category/CategoryList.jsx';
 import SearchBar from '../../components/SearchBar.jsx';
-import CategoryFilter from '../../components/CategoryFilter.jsx';
-import fetchCat from '../../api/apiCalls.js';
-fetchCat();
+import CategoryFilter from '../../components/category/CategoryFilter.jsx';
 const categories = [
   { id: '1', name: 'Instagram', pending: 2, time: 'Hace 3min', tag: 'Móbil' },
   { id: '2', name: 'Turno Médico', pending: 1, time: 'Hace 1min', tag: 'Formulario' },
@@ -30,7 +28,7 @@ export default function HomeScreen() {
         <SafeAreaView style={styles.safeAreaView}>
           <View style={styles.row}>
             <SearchBar categories = {initialCat} setResults = {setResults}/>
-            <CategoryFilter style={styles.filter} setResults = {setResults}/>
+            <CategoryFilter style={styles.filter} categories = {initialCat} setResults = {setResults}/>
           </View>
           <View style={styles.main}>
             <CategoryList categories = {results}/>

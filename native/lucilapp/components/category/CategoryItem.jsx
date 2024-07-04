@@ -25,7 +25,7 @@ const CategoryItem = ({ name, pending, time }) => {
             </View>
             <View style={styles.timeContainer}>
               <Image
-                source={require('../assets/images/clock.png')}
+                source={require('../../assets/images/clock.png')}
                 style={styles.clockIcon}
               />
               <Text style={styles.text}>{timeText}</Text>

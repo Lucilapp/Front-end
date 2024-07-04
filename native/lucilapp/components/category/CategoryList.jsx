@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import CategoryItem from './CategoryItem.jsx'
-import { Link } from 'expo-router';
+import axios from 'axios';
+const url = "http://192.168.56.1:3000/api/categoria"
 
 
 const CategoryList = (props) => (
