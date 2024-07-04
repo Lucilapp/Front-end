@@ -8,7 +8,7 @@ import fetchCat from '../../api/apiCalls.js';
 fetchCat();
 const categories = [
   { id: '1', name: 'Instagram', pending: 2, time: 'Hace 3min', tag: 'Móbil' },
-  { id: '2', name: 'Sacar turno', pending: 1, time: 'Hace 1min', tag: 'Formulario' },
+  { id: '2', name: 'Turno Médico', pending: 1, time: 'Hace 1min', tag: 'Formulario' },
   { id: '3', name: 'YouTube', pending: 1, time: 'Hace 4min', tag: 'Móbil' },
   { id: '4', name: 'Instalar Apps', pending: 5, time: 'Hace 1min', tag: 'Móbil' },
   { id: '5', name: 'Gobierno', pending: 5, time: 'Hace 1min', tag: 'Formulario' },
