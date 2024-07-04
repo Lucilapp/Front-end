@@ -4,7 +4,8 @@ import { useState } from 'react';
 import CategoryList from '../../components/CategoryList.jsx';
 import SearchBar from '../../components/SearchBar.jsx';
 import CategoryFilter from '../../components/CategoryFilter.jsx';
-
+import fetchCat from '../../api/apiCalls.js';
+fetchCat();
 const categories = [
   { id: '1', name: 'Instagram', pending: 2, time: 'Hace 3min', tag: 'Móbil' },
   { id: '2', name: 'Sacar turno', pending: 1, time: 'Hace 1min', tag: 'Formulario' },
@@ -20,6 +21,7 @@ const categories = [
   { id: '12', name: 'Windows 10', pending: 1, time: 'Hace 4min', tag: 'Escritorio' },
   { id: '13', name: 'PDF', pending: 1, time: 'Hace 4min', tag: 'Escritorio' },
 ];
+fetch
 export default function HomeScreen() {
     const [initialCat, setInitialCat] = useState(categories);
     const [results, setResults] = useState(categories);
