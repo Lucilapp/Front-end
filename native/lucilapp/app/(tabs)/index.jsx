@@ -4,25 +4,30 @@ import { useEffect, useState } from 'react';
 import CategoryList from '../../components/category/CategoryList.jsx';
 import SearchBar from '../../components/SearchBar.jsx';
 import CategoryFilter from '../../components/category/CategoryFilter.jsx';
-const categories = [
-  { id: '1', name: 'Instagram', pending: 2, time: 'Hace 3min', tag: 'Móbil' },
-  { id: '2', name: 'Turno Médico', pending: 1, time: 'Hace 1min', tag: 'Aplicaciones' },
-  { id: '3', name: 'YouTube', pending: 1, time: 'Hace 4min', tag: 'Funcional' },
-  { id: '4', name: 'Instalar Apps', pending: 5, time: 'Hace 1min', tag: 'Medico' },
-  { id: '5', name: 'Gobierno', pending: 5, time: 'Hace 1min', tag: 'Formulario' },
-  { id: '6', name: 'Trámites', pending: 5, time: 'Hace 1min', tag: 'Computadora' },
-  { id: '7', name: 'Páginas Web', pending: 5, time: 'Hace 1min', tag: 'Móbil' },
-  { id: '8', name: 'Archivos', pending: 1, time: 'Hace 4min', tag: 'Sistema Operativo' },
-  { id: '9', name: 'iOS', pending: 1, time: 'Hace 4min', tag: 'Aplicaciones' },
-  { id: '10', name: 'Facebook', pending: 1, time: 'Hace 4min', tag: 'Formulario' },
-  { id: '11', name: 'Presentación', pending: 1, time: 'Hace 4min', tag: 'Funcional' },
-  { id: '12', name: 'Windows 10', pending: 1, time: 'Hace 4min', tag: 'Formulario' },
-  { id: '13', name: 'PDF', pending: 1, time: 'Hace 4min', tag: 'Escritorio' },
-];
+import apiCallGET from '../../api/apiCalls.js'
 export default function HomeScreen() {
-    const [initialCat, setInitialCat] = useState(categories);
-    const [results, setResults] = useState(categories);
-    const [usedTags, setTags] = useState([]);
+    const [initialCat, setInitialCat] = useState();
+    const [initialTags, setInitialTags] = useState([]);
+    const [results, setResults] = useState();
+    const [usedTags, setUsedTags] = useState([]);
+    const [loading, setLoading] = useState(true);
+    let start = true;
+    useEffect(() => {
+      async function fetchCat() {
+        const cat =  await apiCallGET('categoria');
+        const tags =  await apiCallGET('filtro');
+        console.log(cat);
+        console.log(tags)
+        setInitialCat(cat);
+        setResults(cat);
+        setInitialTags(tags);
+        setLoading(false);
+      }
+      fetchCat();
+    }, [start])
+    useEffect(() => {
+      console.log(usedTags)
+    }, [usedTags])
     // useEffect(() => {
     //   const filterCatbyTag = (cats, tags) => {
     //     let filteredCats = [];
@@ -42,17 +47,18 @@ export default function HomeScreen() {
     // }, [usedTags]);
     return (
       <>
-        <SafeAreaView style={styles.safeAreaView}>
-          <View style={styles.row}>
-            <SearchBar categories = {initialCat} setResults = {setResults}/>
-            <CategoryFilter style={styles.filter} categories = {initialCat} setResults = {setResults} usedTags = {usedTags} setTags = {setTags}/>
-          </View>
-          <View style={styles.main}>
-            <CategoryList categories = {results}/>
-          </View>
-          <View style={styles.footer}/>
-        </SafeAreaView>
-        
+        {!loading && (<>
+          <SafeAreaView style={styles.safeAreaView}>
+            <View style={styles.row}>
+              <SearchBar categories = {initialCat} setResults = {setResults}/>
+              <CategoryFilter style={styles.filter} tags = {initialTags} usedTags = {usedTags} setTags = {setUsedTags}/>
+            </View>
+            <View style={styles.main}>
+              <CategoryList categories = {results}/>
+            </View>
+            <View style={styles.footer}/>
+          </SafeAreaView>
+        </>)}
       </>
     );
   }

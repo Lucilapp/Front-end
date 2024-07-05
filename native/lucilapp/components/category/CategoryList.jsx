@@ -1,27 +1,22 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import CategoryItem from './CategoryItem.jsx'
-import axios from 'axios';
-const url = "http://192.168.56.1:3000/api/categoria"
-
 
 const CategoryList = (props) => (
-    <View style={styles.container}>
-        <FlatList nestedScrollEnabled
-        data={props.categories}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <CategoryItem name={item.name} pending={item.pending} time={item.time} />
-        )}
-        style={styles.container}
-        />
-    </View>
+        <ScrollView style={styles.container}>
+          {props.categories.map((cat, index) => (
+            <CategoryItem key={index} name={cat.Nombre} pending={cat.Pendientes} time={cat.TiempoTarea} id={cat.Id} />
+          ))}
+        </ScrollView>
 );
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexGrow: 1,
     marginTop: 1,
+    display: "flex",
+    flexDirection: "column",
   }
 });
 

@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
-
+import apiCallGET from '../../api/apiCalls.js'
 export default function TaskScreen(props) {
-  const { category } = useLocalSearchParams();
-  const task = {
+  const { category, id } = useLocalSearchParams();
+  const [loading, setLoading] = useState(true);
+  const [task, setTask] = useState();
+  useEffect(() => {
+    async function fetchTask(catId) {
+    let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
+    elem = elem[0];
+    setLoading(false);
+    return elem;
+    }
+    setTask(fetchTask(id));
+  }, [])
+
+  useEffect(() => {
+    console.log(task);
+  }, [task])
+  const atask = {
     time: '1min',
     category: {
       name: props.category
@@ -17,36 +32,41 @@ export default function TaskScreen(props) {
     }
   }
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <>
+      {!loading && (
+        <>
+          <SafeAreaView style={styles.safeAreaView}>
+          <Link href="/" style={{height:30, marginTop:10}}>
+            <Image source={require('../../assets/images/arrowLeft.png')} style={styles.backButton} />
+          </Link>
 
-      <Link href="/" style={{height:30, marginTop:10}}>
-        <Image source={require('../../assets/images/arrowLeft.png')} style={styles.backButton} />
-      </Link>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Tarea</Text>
+            <View style={styles.headerRight}>
+              <Text style={styles.headerRightText}>Esperando hace</Text>
+              <Text style={styles.headerRightText}>{atask.time}</Text>
+              <Image source={require('../../assets/images/clock.png')} style={styles.clockIcon} />
+            </View>
+          </View>
 
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Tarea</Text>
-        <View style={styles.headerRight}>
-          <Text style={styles.headerRightText}>Esperando hace</Text>
-          <Text style={styles.headerRightText}>{task.time}</Text>
-          <Image source={require('../../assets/images/clock.png')} style={styles.clockIcon} />
-        </View>
-      </View>
+          <View style={styles.section}> 
+            <Text style={styles.sectionTitle}>Descripción de la tarea</Text>
+            <Text style={styles.sectionTitle}>{atask.category.name}</Text>
+            <Text>{atask.description}</Text>
+          </View>
 
-      <View style={styles.section}> 
-        <Text style={styles.sectionTitle}>Descripción de la tarea</Text>
-        <Text style={styles.sectionTitle}>{task.category.name}</Text>
-        <Text>{task.description}</Text>
-      </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Información del asistido</Text>
+            <Text>{atask.user.description}</Text>
+          </View>
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Información del asistido</Text>
-        <Text>{task.user.description}</Text>
-      </View>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Tomar Tarea</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Tomar Tarea</Text>
+          </TouchableOpacity>
+          </SafeAreaView>
+        </>
+      )}
+    </>
   );
 }
 const styles = StyleSheet.create({

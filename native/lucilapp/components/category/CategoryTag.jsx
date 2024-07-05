@@ -5,10 +5,10 @@ const CategoryTag = (props) => {
     const [isPressed, setIsPressed] = useState(false);
     const handlePress = () => {
         if(isPressed){
-            props.unpress(props.tagname);
+            props.unpress(props.tagId);
         }
         else{
-            props.press(props.tagname);
+            props.press(props.tagId);
         }
         setIsPressed(!isPressed);
     };

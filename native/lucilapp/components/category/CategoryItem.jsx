@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import TaskScreen from '@/app/task/[category]';
 import { useRouter } from 'expo-router';
+import apiCallGET from '@/api/apiCalls';
 
-const CategoryItem = ({ name, pending, time }) => {
+const CategoryItem = ({ name, pending, time, id }) => {
   const router = useRouter();
   const handlePress = () =>{
     router.push({
       pathname: "/task/[category]",
-      params: {category : `${name}`}
+      params: {category : `${name}`, id : `${id}`}
     })
   }
-  const timeText = `${time}`
+  const timeText = `Hace ${time}min`
   const pendingText = ` Pendientes`
   return (
     <View>

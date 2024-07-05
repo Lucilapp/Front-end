@@ -4,6 +4,10 @@ import CategoryTag from "./CategoryTag.jsx"
 const CategoryFilter = (props) => {
     const [isOpen, setIsOpen] = useState(false);
     const [initialTags, setInitialTags] = useState([]);
+    useEffect(() => {
+        setInitialTags(props.tags);
+    }, []);
+
     const pressTag = (tag) => {
         let tags = props.usedTags;
         tags = [...tags, tag];
@@ -11,13 +15,10 @@ const CategoryFilter = (props) => {
     }
     const unpressTag = (tagToRemove) => {
         let tags = props.usedTags;
-        const updatedTags = tags.filter(tag => tag !== tagToRemove);
+        const updatedTags = tags.filter(tag => tag !== tagToRemove);  
         props.setTags(updatedTags);
     };
-    useEffect(() => {
-        const uniqueTags = Array.from(new Set(props.categories.map(element => element.tag)));
-        setInitialTags(uniqueTags);
-    }, []);
+    
     return(
         <View style={props.style}>
             <TouchableOpacity onPress={() => {setIsOpen(!isOpen)}}>
@@ -28,7 +29,7 @@ const CategoryFilter = (props) => {
             <View style={styles.filterContainer}>
                 <View style={styles.filterContent}>
                         {initialTags.map((tag, index) => (
-                            <CategoryTag key={index} tagname={tag} press={pressTag} unpress={unpressTag} />
+                            <CategoryTag key={index} tagname={tag.Nombre} tagId = {tag.Id} press={pressTag} unpress={unpressTag} />
                         ))}
                 </View>
             </View>
