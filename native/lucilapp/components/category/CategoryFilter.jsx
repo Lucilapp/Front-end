@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, TextInput, Button, Image } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, TextInput, Button, Image } from 'react-native';
 import CategoryTag from "./CategoryTag.jsx"
 const CategoryFilter = (props) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [tags, setTags] = useState([]);
-    useEffect(()=>{
-        props.categories.forEach(element => {
-            let tagArray = tags;
-            if(!tagArray.find(item => item === element.tag)){
-                tagArray.push(element.tag);
-                setTags(tagArray);
-            }
-        });
+    const [initialTags, setInitialTags] = useState([]);
+    const pressTag = (tag) => {
+        let tags = props.usedTags;
+        tags = [...tags, tag];
+        props.setTags(tags);
+    }
+    const unpressTag = (tagToRemove) => {
+        let tags = props.usedTags;
+        const updatedTags = tags.filter(tag => tag !== tagToRemove);
+        props.setTags(updatedTags);
+    };
+    useEffect(() => {
+        const uniqueTags = Array.from(new Set(props.categories.map(element => element.tag)));
+        setInitialTags(uniqueTags);
     }, []);
     return(
         <View style={props.style}>
@@ -21,14 +26,11 @@ const CategoryFilter = (props) => {
             
             {isOpen && (
             <View style={styles.filterContainer}>
-                <FlatList
-                    data={tags}
-                    keyExtractor={(item) => item}
-                    renderItem={({ item }) => (
-                    <CategoryTag tagname={item} />
-                    )}
-                    style={styles.filterFlatlist}
-                />
+                <View style={styles.filterContent}>
+                        {initialTags.map((tag, index) => (
+                            <CategoryTag key={index} tagname={tag} press={pressTag} unpress={unpressTag} />
+                        ))}
+                </View>
             </View>
             )}
             
@@ -44,7 +46,6 @@ const styles = StyleSheet.create({
     },
     filterContainer:{
         width: 390,
-        height: 100,
         left: -362,
         top: 20,
         backgroundColor:"#82bdfa90",
@@ -55,5 +56,11 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 10,
     },
+    filterContent: {
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        flexWrap: "wrap",
+    }
 })
 export default CategoryFilter;
