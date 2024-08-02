@@ -22,7 +22,7 @@ const CategoryFilter = (props) => {
     return(
         <View style={props.style}>
             <TouchableOpacity onPress={() => {setIsOpen(!isOpen)}}>
-                <Image source={require('../../assets/images/filter.png')} style={styles.image}/>
+                <Image source={require('../../../assets/images/filter.png')} style={styles.image}/>
             </TouchableOpacity>
             
             {isOpen && (

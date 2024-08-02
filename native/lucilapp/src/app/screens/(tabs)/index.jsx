@@ -1,10 +1,10 @@
 import { Image, StyleSheet, Platform, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useEffect, useState } from 'react';
-import CategoryList from '../../components/category/CategoryList.jsx';
-import SearchBar from '../../components/SearchBar.jsx';
-import CategoryFilter from '../../components/category/CategoryFilter.jsx';
-import apiCallGET from '../../api/apiCalls.js'
+import CategoryList from '../../../components/category/CategoryList.jsx';
+import SearchBar from '../../../components/SearchBar.jsx';
+import CategoryFilter from '../../../components/category/CategoryFilter.jsx';
+import apiCallGET from '../../../api/apiCalls.js'
 export default function HomeScreen() {
     const [initialCat, setInitialCat] = useState();
     const [initialTags, setInitialTags] = useState([]);

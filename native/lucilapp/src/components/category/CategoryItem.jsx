@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import TaskScreen from '@/app/task/[category]';
+import TaskScreen from '../../app/screens/task/[category]';
 import { useRouter } from 'expo-router';
-import apiCallGET from '@/api/apiCalls';
+import apiCallGET from '../../api/apiCalls';
 
 const CategoryItem = ({ name, pending, time, id }) => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const CategoryItem = ({ name, pending, time, id }) => {
             </View>
             <View style={styles.timeContainer}>
               <Image
-                source={require('../../assets/images/clock.png')}
+                source={require('../../../assets/images/clock.png')}
                 style={styles.clockIcon}
               />
               <Text style={styles.text}>{timeText}</Text>

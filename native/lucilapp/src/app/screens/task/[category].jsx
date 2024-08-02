@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
-import apiCallGET from '../../api/apiCalls.js'
+import apiCallGET from '../../../api/apiCalls.js'
 export default function TaskScreen(props) {
   const { category, id } = useLocalSearchParams();
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ export default function TaskScreen(props) {
         <>
           <SafeAreaView style={styles.safeAreaView}>
           <Link href="/" style={{height:30, marginTop:10}}>
-            <Image source={require('../../assets/images/arrowLeft.png')} style={styles.backButton} />
+            <Image source={require('../../../../assets/images/arrowLeft.png')} style={styles.backButton} />
           </Link>
 
           <View style={styles.header}>
@@ -45,7 +45,7 @@ export default function TaskScreen(props) {
             <View style={styles.headerRight}>
               <Text style={styles.headerRightText}>Esperando hace</Text>
               <Text style={styles.headerRightText}>{atask.time}</Text>
-              <Image source={require('../../assets/images/clock.png')} style={styles.clockIcon} />
+              <Image source={require('../../../../assets/images/clock.png')} style={styles.clockIcon} />
             </View>
           </View>
 

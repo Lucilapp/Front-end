@@ -19,7 +19,7 @@ const CategoryTag = (props) => {
                 <View style={isPressed ? styles.tagPressed : styles.tagUnpressed}>
                     <Text style={styles.tagText}>{props.tagname}</Text>
                     {isPressed && (<>
-                        <Image source={require('../../assets/images/X.png')} style={styles.tagX} />
+                        <Image source={require('../../../assets/images/X.png')} style={styles.tagX} />
                     </>)}
                 </View>
             </TouchableOpacity>
