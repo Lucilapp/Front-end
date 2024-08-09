@@ -1,10 +1,11 @@
 import { Image, StyleSheet, Platform, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native';
 import { useEffect, useState } from 'react';
 import CategoryList from '../../../components/category/CategoryList.jsx';
-import SearchBar from '../../../components/SearchBar.jsx';
+import SearchBar from '../../../components/searchBar/SearchBar.jsx';
 import CategoryFilter from '../../../components/category/CategoryFilter.jsx';
-import apiCallGET from '../../../api/apiCalls.js'
+import apiCallGET from '../../../api/apiCalls.js';
+
 export default function HomeScreen() {
     const [initialCat, setInitialCat] = useState();
     const [initialTags, setInitialTags] = useState([]);
@@ -28,23 +29,6 @@ export default function HomeScreen() {
     useEffect(() => {
       console.log(usedTags)
     }, [usedTags])
-    // useEffect(() => {
-    //   const filterCatbyTag = (cats, tags) => {
-    //     let filteredCats = [];
-    //     tags.forEach(tag => {
-    //       let batch = cats.filter((cat) => cat.tag === tag);
-    //       filteredCats = [...filteredCats, ...batch]
-    //     });
-    //     return filteredCats;
-    //   }
-    //   const empty = [];
-    //   if(usedTags !== empty){
-    //     setResults(filterCatbyTag(results,usedTags));
-    //   }
-    //   else {
-    //     setResults(categories);
-    //   }
-    // }, [usedTags]);
     return (
       <>
         {!loading && (<>
