@@ -1,12 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './src/app/screens/index';
+import { NavigationContainer } from '@react-navigation/native';
+import ChatScreen from './src/app/screens/chat/[chat]';
 
 export default function App() {
   return (
-    <>
-      <HomeScreen/>
-    </>
+    // <>
+    // <NavigationContainer>
+    //   <HomeScreen/>
+    // </NavigationContainer>
+    // </>
+    // <ChatScreen></ChatScreen>
+    <View>
+      <Text>Hola</Text>
+    </View>
   );
 }
 
