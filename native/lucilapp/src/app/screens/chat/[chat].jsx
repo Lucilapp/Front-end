@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView, FlatList, TextInput } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
 import Msj from '../../../components/chat/chatMsj.jsx';
@@ -73,21 +73,47 @@ export default function ChatScreen(props) {
             </TouchableOpacity>
           </View>
         </View>
-        <View>
+        <View style={styles.mensajes}>
           <FlatList
               data={arrayMsj}        
               renderItem={renderItem} 
               keyExtractor={item => item.id}
             />
         </View>
+        <View style={styles.containerInput}>
+          <TextInput
+            style={styles.input}
+            placeholder="Escribir...."
+            placeholderTextColor="#9E9E9E"
+          />
+        </View>
         </>
     </>
   );
 }
+
 const styles = StyleSheet.create({
+  mensajes: {
+    paddingBottom: 400,
+
+  },
+  containerInput: {
+    paddingHorizontal: 20,
+    position: 'absolute',
+    top: 850,
+    width: '100%'
+  },
+  input: {
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#E0E0E0',
+    paddingHorizontal: 15,
+    fontSize: 16,
+    color: '#000',
+  },
 
   sent: {
-    backgroundColor: '#dcf8c6', // Verde claro
+    backgroundColor: '#dcf8c6',
     alignSelf: 'flex-end',
     padding: 10,
     borderRadius: 8,
@@ -96,7 +122,7 @@ const styles = StyleSheet.create({
     marginRight: 17,
   },
   received: {
-    backgroundColor: '#ffffff', // Blanco
+    backgroundColor: '#ffffff',
     alignSelf: 'flex-start',
     padding: 10,
     borderRadius: 8,
@@ -105,8 +131,8 @@ const styles = StyleSheet.create({
     marginLeft: 17,
   },
     InfoIcon: {
-      width: 20,
-      height: 20,
+      width: 50,
+      height: 50,
     },
   header: {
     width: '100%',
@@ -122,7 +148,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black',
+    color: '#000',
   },
   container: {
     display: "flex",
@@ -135,9 +161,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     borderRadius: 10,
+    marginBottom: 17,
   },
   buttonText: {
-    color: '#000', // Color negro para el texto
+    color: '#000',
     fontWeight: 'bold',
     fontSize: 16,
   },
