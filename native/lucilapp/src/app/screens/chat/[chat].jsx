@@ -63,11 +63,15 @@ export default function ChatScreen(props) {
             {/*<Image source={require('IMAGEN DE ADULTO MAYOR')}/>*/}
             <Text style={styles.headerText}>Nombre adulto mayor</Text>
         </SafeAreaView>
-        <View style={styles.container}>
-        <Image source={require('../../../../assets/images/infoIcon.png')} style={styles.InfoIcon} />
-        <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Terminar Tarea</Text>
-        </TouchableOpacity>
+        <View style={styles.section}>
+          <View style={styles.flexSmall}>
+            <Image source={require('../../../../assets/images/infoIcon.png')} style={styles.InfoIcon} />
+          </View>
+          <View style={styles.flexLarge}>
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Terminar Tarea</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View>
           <FlatList
@@ -121,6 +125,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   container: {
+    display: "flex",
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -135,5 +140,16 @@ const styles = StyleSheet.create({
     color: '#000', // Color negro para el texto
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  section: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent:"flex-start",
+  },
+  flexSmall: {
+    width: "15%"
+  },
+  flexLarge: {
+    width:"70%",
   },
 });
