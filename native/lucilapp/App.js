@@ -11,9 +11,8 @@ export default function App() {
     //   <HomeScreen/>
     // </NavigationContainer>
     // </>
-    // <ChatScreen></ChatScreen>
     <View>
-      <Text>Hola</Text>
+      <ChatScreen/>
     </View>
   );
 }

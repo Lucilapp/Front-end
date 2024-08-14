@@ -5,16 +5,26 @@ import apiCallGET from '../../../api/apiCalls.js'
 import Msj from '../../../components/chat/chatMsj.jsx';
 
 const arrayMsj = [
-  { text: '¡Hola! ¿Cómo estás?', send: true },
-  { text: 'Tengo una reunión a las 3 PM.', send: false },
-  { text: '¿Te gustaría ir al cine este fin de semana?', send: true },
-  { text: 'No podré asistir a la fiesta.', send: false },
-  { text: 'El proyecto está casi terminado.', send: true },
-  { text: '¿Podrías enviarme el informe?', send: false },
-  { text: '¡Feliz cumpleaños!', send: true },
-  { text: 'El pedido ha sido enviado.', send: false },
-  { text: '¿Has visto la última película de Marvel?', send: true },
-  { text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
+  { id: '1', text: '¡Hola! ¿Cómo estás?', send: true },
+  { id: '2', text: 'Tengo una reunión a las 3 PM.', send: true },
+  { id: '3', text: '¿Te gustaría ir al cine este fin de semana?', send: true },
+  { id: '4', text: 'No podré asistir a la fiesta.', send: false },
+  { id: '5', text: 'El proyecto está casi terminado.', send: true },
+  { id: '6', text: '¿Podrías enviarme el informe?', send: false },
+  { id: '7', text: '¡Feliz cumpleaños!', send: true },
+  { id: '8', text: 'El pedido ha sido enviado.', send: false },
+  { id: '9', text: '¿Has visto la última película de Marvel?', send: true },
+  { id: '10', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
+  { id: '11', text: '¡Hola! ¿Cómo estás?', send: true },
+  { id: '12', text: 'Tengo una reunión a las 3 PM.', send: true },
+  { id: '13', text: '¿Te gustaría ir al cine este fin de semana?', send: true },
+  { id: '14', text: 'No podré asistir a la fiesta.', send: false },
+  { id: '15', text: 'El proyecto está casi terminado.', send: true },
+  { id: '16', text: '¿Podrías enviarme el informe?', send: false },
+  { id: '17', text: '¡Feliz cumpleaños!', send: true },
+  { id: '18', text: 'El pedido ha sido enviado.', send: false },
+  { id: '19', text: '¿Has visto la última película de Marvel?', send: true },
+  { id: '20', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
 ];
 
 export default function ChatScreen(props) {
@@ -44,33 +54,29 @@ export default function ChatScreen(props) {
         }
         
       </>
-    
   );
 
   return (
     <>
-      {!loading && (
         <>
-        <View style={styles.header}>
+        <SafeAreaView style={styles.header}>
             {/*<Image source={require('IMAGEN DE ADULTO MAYOR')}/>*/}
             <Text style={styles.headerText}>Nombre adulto mayor</Text>
-        </View>
-        <View style={styles.section}>
+        </SafeAreaView>
+        <View style={styles.container}>
         <Image source={require('../../../../assets/images/infoIcon.png')} style={styles.InfoIcon} />
         <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Terminar Tarea</Text>
         </TouchableOpacity>
         </View>
-        <ScrollView>
+        <View>
           <FlatList
-            data={arrayMsj}        
-            renderItem={renderItem} 
-            keyExtractor={item => item.id}
-          />
-        </ScrollView>
+              data={arrayMsj}        
+              renderItem={renderItem} 
+              keyExtractor={item => item.id}
+            />
+        </View>
         </>
-        //AGREGAR INPUT PARA ENVIAR MSJS
-      )}
     </>
   );
 }
@@ -79,22 +85,31 @@ const styles = StyleSheet.create({
   sent: {
     backgroundColor: '#dcf8c6', // Verde claro
     alignSelf: 'flex-end',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 10,
+    maxWidth: '80%',
+    marginRight: 17,
   },
   received: {
     backgroundColor: '#ffffff', // Blanco
     alignSelf: 'flex-start',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 10,
+    maxWidth: '80%',
+    marginLeft: 17,
   },
     InfoIcon: {
-        justifyContent:'flex-start',
-        width: 20,
-        height: 20,
+      width: 20,
+      height: 20,
     },
   header: {
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#9747FF',
+    backgroundColor: 'rgba(151, 71, 255, 0.6)',
     padding: 10,
     borderRadius: 10,
     marginBottom: 20,
@@ -103,9 +118,11 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: 'black',
   },
-  section: {
-    flexDirection:'row'
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   button: {
     backgroundColor: '#C6A0FF',
@@ -113,10 +130,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: '#000', // Color negro para el texto
     fontWeight: 'bold',
     fontSize: 16,
   },

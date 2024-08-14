@@ -9,9 +9,11 @@ const colorMsj = () => {
 }
 
 const Msj = (props) => {
-    <View style={styles.container}>
-        <Text style={styles.text}>{props.text}</Text>
-    </View>
+  return (
+      <View style={[styles.container, props.style]}>
+          <Text style={styles.text}>{props.text}</Text>
+      </View>
+  );
 };
 
 const styles = StyleSheet.create({
