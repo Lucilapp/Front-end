@@ -1,60 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef  } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView, FlatList, TextInput, Keyboard } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
 import Msj from '../../../components/chat/chatMsj.jsx';
 
-const arrayMsj = [
-  { id: '1', text: '¡Hola! ¿Cómo estás?', send: true },
-  { id: '2', text: 'Tengo una reunión a las 3 PM.', send: true },
-  { id: '3', text: '¿Te gustaría ir al cine este fin de semana?', send: true },
-  { id: '4', text: 'No podré asistir a la fiesta.', send: false },
-  { id: '5', text: 'El proyecto está casi terminado.', send: true },
-  { id: '6', text: '¿Podrías enviarme el informe?', send: false },
-  { id: '7', text: '¡Feliz cumpleaños!', send: true },
-  { id: '8', text: 'El pedido ha sido enviado.', send: false },
-  { id: '9', text: '¿Has visto la última película de Marvel?', send: true },
-  { id: '10', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
-  { id: '11', text: '¡Hola! ¿Cómo estás?', send: true },
-  { id: '12', text: 'Tengo una reunión a las 3 PM.', send: true },
-  { id: '13', text: '¿Te gustaría ir al cine este fin de semana?', send: true },
-  { id: '14', text: 'No podré asistir a la fiesta.', send: false },
-  { id: '15', text: 'El proyecto está casi terminado.', send: true },
-  { id: '16', text: '¿Podrías enviarme el informe?', send: false },
-  { id: '17', text: '¡Feliz cumpleaños!', send: true },
-  { id: '18', text: 'El pedido ha sido enviado.', send: false },
-  { id: '19', text: '¿Has visto la última película de Marvel?', send: true },
-  { id: '20', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
-  { id: '21', text: '¡Hola! ¿Cómo estás?', send: true },
-  { id: '22', text: 'Tengo una reunión a las 3 PM.', send: true },
-  { id: '23', text: '¿Te gustaría ir al cine este fin de semana?', send: true },
-  { id: '24', text: 'No podré asistir a la fiesta.', send: false },
-  { id: '25', text: 'El proyecto está casi terminado.', send: true },
-  { id: '26', text: '¿Podrías enviarme el informe?', send: false },
-  { id: '27', text: '¡Feliz cumpleaños!', send: true },
-  { id: '28', text: 'El pedido ha sido enviado.', send: false },
-  { id: '29', text: '¿Has visto la última película de Marvel?', send: true },
-  { id: '30', text: 'El proyecto está casi terminado.', send: true },
-  { id: '31', text: '¿Podrías enviarme el informe?', send: false },
-  { id: '32', text: '¡Feliz cumpleaños!bdjwkabdjoahbdhuowahbdujwbaduoibwauodbwuoahduwoahdiwoahdiowhfiohauohduowauodhgduwoabfwouabduwaoboooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooFeliz cumpleaños!bdjwkabdjoahbdhuowahbdujwbaduoibwauodbwuoahduwoahdiwoahdiowhfiohauohduowauodhgduwoabfwouabduwaoboooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooFeliz cumpleaños!bdjwkabdjoahbdhuowahbdujwbaduoibwauodbwuoahduwoahdiwoahdiowhfiohauohduowauodhgduwoabfwouabduwaobooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo', send: true },
-  { id: '33', text: 'El pedido ha sido enviado.', send: false },
-  { id: '34', text: '¿Has visto la última película de Marvel?', send: true },
-  { id: '35', text: '¡Feliz cumpleaños!', send: true },
-  { id: '36', text: 'El pedido ha sido enviado.', send: false },
-  { id: '37', text: '¿Has visto la última película de Marvel?', send: true },
-  { id: '38', text: 'El proyecto está casi terminado.', send: true },
-  { id: '39', text: '¿Podrías enviarme el informe?', send: false },
-  { id: '40', text: '¡Feliz cumpleaños!', send: true },
-  { id: '41', text: 'El pedido ha sido enviado.', send: false },
-  { id: '42', text: '¿Has visto la última película de Marvel?', send: true },
-  { id: '43', text: 'ULTIMO MENSAJE.', send: false },
-];
+
 
 
 
 
 export default function ChatScreen(props) {
-  
+
+  const [arrayMsj, setArrayMsj] = useState([
+    { id: '1', text: '¡Hola! ¿Cómo estás?', send: true },
+    { id: '2', text: 'Tengo una reunión a las 3 PM.', send: true },
+    { id: '3', text: '¿Te gustaría ir al cine este fin de semana?', send: true },
+    { id: '4', text: 'No podré asistir a la fiesta.', send: false },
+    { id: '5', text: 'El proyecto está casi terminado.', send: true },
+    { id: '6', text: '¿Podrías enviarme el informe?', send: false },
+    { id: '7', text: '¡Feliz cumpleaños!', send: true },
+    { id: '8', text: 'El pedido ha sido enviado.', send: false },
+    { id: '9', text: '¿Has visto la última película de Marvel?', send: true },
+    { id: '10', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
+    { id: '11', text: 'ULTIMO MENSAJE.', send: false },
+  ]);
+
 /*
   useEffect(() => {
     async function fetchTask() {
@@ -83,26 +53,40 @@ export default function ChatScreen(props) {
   );
   
   const [keyboardVisible, setKeyboardVisible] = useState(false);
-
+  const [valText, setvalText] = useState('');
   useEffect(() => {
-    // Listener para detectar cuando el teclado se muestra
+    //detecta cuando el teclado se muestra
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => setKeyboardVisible(true)
     );
   
-    // Listener para detectar cuando el teclado se oculta
+    //detecta cuando el teclado se oculta
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => setKeyboardVisible(false)
     );
   
-    // Limpieza de listeners cuando el componente se desmonta
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  const enviarMsj = () =>{
+    const nuevoMsj = {
+      id: parseInt(arrayMsj[arrayMsj.length - 1].id) + 1,
+      text: valText,
+      send: true
+    };
+    setArrayMsj([...arrayMsj, nuevoMsj]);
+    setvalText('');
+  }
+
+  const flatListRef = useRef(null);
+  const handleScrollToEnd = () => {
+    flatListRef.current.scrollToEnd({ animated: true });
+  };
 
   return (
     <>
@@ -123,6 +107,7 @@ export default function ChatScreen(props) {
         </View>
         <View style={styles.mensajes}>
           <FlatList
+              ref={flatListRef}
               data={arrayMsj}        
               renderItem={renderItem}
               keyExtractor={item => item.id}
@@ -131,11 +116,17 @@ export default function ChatScreen(props) {
         </View>
         <View style={keyboardVisible ? styles.containerInputKeyboard : styles.containerInput}>
           <TextInput
+            value={valText}
+            multiline={true}
             style={styles.input}
             placeholder="Escribir...."
             placeholderTextColor="#9E9E9E"
+            onChangeText={nuevoTexto => setvalText(nuevoTexto)}
           />
-          <Image source={require('../../../../assets/images/send.png')} style={styles.sendIcon} />
+          
+          <TouchableOpacity onPress={() => {enviarMsj(); handleScrollToEnd();}}>
+            <Image source={require('../../../../assets/images/send.png')} style={styles.sendIcon} />
+          </TouchableOpacity>
         </View>
         
     </>
@@ -164,14 +155,14 @@ const styles = StyleSheet.create({
   containerInput: {
     paddingHorizontal: 20,  
     position: 'absolute',
-    top: 850,
+    top: 860,
     width: '100%',
     paddingTop: -20,
     display: 'flex',
     flexDirection: 'row',
   },
   input: {
-    height: 40,
+    minHeight: 40,
     borderRadius: 20,
     backgroundColor: '#E0E0E0',
     paddingHorizontal: 15,
