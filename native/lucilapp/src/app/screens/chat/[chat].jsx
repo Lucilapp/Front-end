@@ -22,7 +22,6 @@ export default function ChatScreen(props) {
     { id: '8', text: 'El pedido ha sido enviado.', send: false },
     { id: '9', text: '¿Has visto la última película de Marvel?', send: true },
     { id: '10', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
-    { id: '11', text: 'ULTIMO MENSAJE.', send: false },
   ]);
 
 /*
@@ -55,18 +54,18 @@ export default function ChatScreen(props) {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [valText, setvalText] = useState('');
   useEffect(() => {
-    //detecta cuando el teclado se muestra
+    // listener que detecta cuando el teclado se muestra
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => setKeyboardVisible(true)
     );
   
-    //detecta cuando el teclado se oculta
+    // listener que detecta cuando el teclado se oculta
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => setKeyboardVisible(false)
     );
-  
+    // Limpieza de listeners
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
@@ -77,7 +76,7 @@ export default function ChatScreen(props) {
     const nuevoMsj = {
       id: parseInt(arrayMsj[arrayMsj.length - 1].id) + 1,
       text: valText,
-      send: true
+      send: true  
     };
     setArrayMsj([...arrayMsj, nuevoMsj]);
     setvalText('');
@@ -109,7 +108,7 @@ export default function ChatScreen(props) {
           <FlatList
               ref={flatListRef}
               data={arrayMsj}        
-              renderItem={renderItem}
+              renderItem={renderItem} 
               keyExtractor={item => item.id}
               ListFooterComponent={<View style={styles.footer} />}
             />
@@ -150,7 +149,6 @@ const styles = StyleSheet.create({
     height: 30,
     marginLeft: 20,
     marginTop: 5,
-    /*borderRadius: '100%',*/
   },
   containerInput: {
     paddingHorizontal: 20,  
@@ -170,7 +168,6 @@ const styles = StyleSheet.create({
     width: '85%',
     color: '#000',
   },
-
   sent: {
     backgroundColor: '#dcf8c6',
     alignSelf: 'flex-end',
@@ -181,7 +178,7 @@ const styles = StyleSheet.create({
     marginRight: 17,
   },
   received: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#00000010',
     alignSelf: 'flex-start',
     padding: 10,
     borderRadius: 8,
