@@ -3,14 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollVi
 import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
 import Msj from '../../../components/chat/chatMsj.jsx';
-
-
-
-
-
+import {io} from "socket.io-client";
 
 export default function ChatScreen(props) {
 
+  var socket;
   const [arrayMsj, setArrayMsj] = useState([
     { id: '1', text: '¡Hola! ¿Cómo estás?', send: true },
     { id: '2', text: 'Tengo una reunión a las 3 PM.', send: true },
@@ -35,6 +32,10 @@ export default function ChatScreen(props) {
     setTask(fetchTask(id));
   }, [])
 */
+
+  useEffect(() => {
+    socket = io('http://localhost:5000')
+  }, [])
 
   const renderItem = ({ item }) => (
       <>
@@ -79,7 +80,17 @@ export default function ChatScreen(props) {
       send: true  
     };
     setArrayMsj([...arrayMsj, nuevoMsj]);
+    sendMsgToSocket(nuevoMsj);
     setvalText('');
+  }
+
+  const sendMsgToSocket = (msg) =>{
+    var event = "messageSend";
+    var socketId = socket.id;
+    var sender = 'native';
+    var reciever = props.ClientSocket;
+    
+    socket.emit(event, socketId, sender, msg, reciever);
   }
 
   const flatListRef = useRef(null);
