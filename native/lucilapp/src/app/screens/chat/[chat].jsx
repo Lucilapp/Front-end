@@ -87,10 +87,9 @@ export default function ChatScreen(props) {
   const sendMsgToSocket = (msg) =>{
     var event = "messageSend";
     var socketId = socket.id;
-    var sender = 'native';
     var reciever = props.ClientSocket;
     
-    socket.emit(event, socketId, sender, msg, reciever);
+    socket.emit(event, socketId, msg, reciever);
   }
 
   const flatListRef = useRef(null);
