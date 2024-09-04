@@ -1,42 +1,62 @@
 import { io } from "socket.io-client";
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 import { useEffect, useState } from "react";
 
 export default function SocketTest() {
     const [socket, setSocket] = useState(null);
     const [serverConnected, setServerConnected] = useState(false);
-    useEffect(() => {
-        const newSocket = io('http://localhost:5000');
-        setSocket(newSocket);
 
-        // Manejar la conexión
-        newSocket.on('connect', () => {
-            console.log(newSocket.id);
-        });
-        newSocket.on('serverConnected', () => {
-            setServerConnected(true);
-        }) 
-        // Limpiar la instancia del socket cuando el componente se desmonte
-        return () => {
-            newSocket.disconnect();
-        };
-    }, []); // El array vacío asegura que este efecto solo se ejecute una vez
+    const [stateError, setError] = useState('No hay Error');
+      useEffect(() => {
+        try
+        {
+            const newSocket = io('https://457d-200-73-176-50.ngrok-free.app', { transports : ['websocket'] });
+            setSocket(newSocket);
+
+            newSocket.on('connect', () => {
+                console.log(newSocket.id);
+            });
+            newSocket.on('serverConnected', () => {
+                setServerConnected(true);
+            }) 
+            return () => {
+                newSocket.disconnect();
+            };
+        }
+        catch (error) {
+            console.log(error)
+            setError(error.msg)
+        }
+        
+    }, []);
     
     const sendMsgToSocket = (msg = "Hola") => {
-        if (socket) {
+        setError('Error')
+
+        try{
             const event = "messageSend";
             const socketId = socket.id;
             const receiver = "a"; // props.ClientSocket;
-
             socket.emit(event, socketId, msg, receiver);
-        }
+            }
+        catch (error){
+            console.log(error);
+            setError(error.msg)
+        } 
+        
     };
 
     return (
         <>
-            <Text>A</Text>
-            <TouchableOpacity onPress={() => sendMsgToSocket()}><Text>Mandar</Text></TouchableOpacity>
-            {serverConnected && <Text>Server Responde</Text>}
+            <View style={{flex: 1, display: "flex", justifyContent: "center"}}>
+                <Text>A</Text>
+                <TouchableOpacity onPress={() => sendMsgToSocket()}><Text>Mandar</Text></TouchableOpacity>
+                {serverConnected && <Text>Server Responde</Text>}
+                <Text>{stateError}</Text>
+            </View>
+            
         </>
     );
+
+
 }

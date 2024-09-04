@@ -11,13 +11,14 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="index">
-        <Stack.Screen name="index" component={HomeScreen} options={{headerShown: false}} />
-        <Stack.Screen name="task" component={TaskScreen} options={{headerShown: false}} />
-        <Stack.Screen name="chat" component={ChatScreen} options={{headerShown: true}} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <Stack.Navigator initialRouteName="index">
+    //     <Stack.Screen name="index" component={HomeScreen} options={{headerShown: false}} />
+    //     <Stack.Screen name="task" component={TaskScreen} options={{headerShown: false}} />
+    //     <Stack.Screen name="chat" component={ChatScreen} options={{headerShown: true}} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+    <SocketTest></SocketTest>
   );
 }
 
