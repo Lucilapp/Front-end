@@ -4,17 +4,20 @@ import HomeScreen from './src/app/screens/index';
 import { NavigationContainer } from '@react-navigation/native';
 import ChatScreen from './src/app/screens/chat/[chat]';
 import SocketTest from './src/app/screens/socketTest/socketTest';
+import TaskScreen from './src/app/screens/task/[category]';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    // <>
-    // <NavigationContainer>
-    //   <HomeScreen/>
-    // </NavigationContainer>
-    // </>
-    <View>
-      <SocketTest/>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="index">
+        <Stack.Screen name="index" component={HomeScreen} options={{headerShown: false}} />
+        <Stack.Screen name="task" component={TaskScreen} options={{headerShown: false}} />
+        <Stack.Screen name="chat" component={ChatScreen} options={{headerShown: true}} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

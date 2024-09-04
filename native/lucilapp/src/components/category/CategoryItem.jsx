@@ -4,13 +4,14 @@ import TaskScreen from '../../app/screens/task/[category]';
 import { useRouter } from 'expo-router';
 import apiCallGET from '../../api/apiCalls';
 
-const CategoryItem = ({ name, pending, time, id }) => {
+const CategoryItem = ({ navigation, name, pending, time, id }) => {
   const router = useRouter();
   const handlePress = () =>{
-    router.push({
-      pathname: "/task/[category]",
-      params: {category : `${name}`, id : `${id}`}
-    })
+    navigation.navigate('task', {
+      itemId: 86,
+      category : `${name}`,
+      id : `${id}`
+    });
   }
   const timeText = `Hace ${time}min`
   const pendingText = ` Pendientes`

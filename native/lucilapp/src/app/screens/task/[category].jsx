@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
-export default function TaskScreen(props) {
-  const { category, id } = useLocalSearchParams();
+export default function TaskScreen(props, route) {
+  const { category, id } = route.params;
   const [loading, setLoading] = useState(true);
   const [task, setTask] = useState();
   useEffect(() => {
