@@ -10,7 +10,7 @@ export default function SocketTest() {
       useEffect(() => {
         try
         {
-            const newSocket = io('https://457d-200-73-176-50.ngrok-free.app', { transports : ['websocket'] });
+            const newSocket = io('https://cf81-200-73-176-50.ngrok-free.app', { transports : ['websocket'] });
             setSocket(newSocket);
 
             newSocket.on('connect', () => {

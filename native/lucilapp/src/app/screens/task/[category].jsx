@@ -31,6 +31,11 @@ export default function TaskScreen(props, route) {
       `
     }
   }
+  const handlePress = () =>{
+    navigation.navigate('chat', {
+      tarea: task
+    });
+  }
   return (
     <>
       {!loading && (
@@ -60,7 +65,7 @@ export default function TaskScreen(props, route) {
             <Text>{atask.user.description}</Text>
           </View>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={handlePress} style={styles.button}>
             <Text style={styles.buttonText}>Tomar Tarea</Text>
           </TouchableOpacity>
           </SafeAreaView>
