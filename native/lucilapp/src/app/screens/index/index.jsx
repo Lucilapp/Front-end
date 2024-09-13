@@ -6,7 +6,7 @@ import SearchBar from '../../../components/searchBar/SearchBar.jsx';
 import CategoryFilter from '../../../components/category/CategoryFilter.jsx';
 import apiCallGET from '../../../api/apiCalls.js';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
     const [initialCat, setInitialCat] = useState();
     const [initialTags, setInitialTags] = useState([]);
     const [results, setResults] = useState();
@@ -16,9 +16,10 @@ export default function HomeScreen() {
     useEffect(() => {
       async function fetchCat() {
         const cat =  await apiCallGET('categoria');
+
         const tags =  await apiCallGET('filtro');
-        console.log(cat);
-        console.log(tags)
+        console.log("cat: ",cat);
+        
         setInitialCat(cat);
         setResults(cat);
         setInitialTags(tags);
@@ -26,9 +27,6 @@ export default function HomeScreen() {
       }
       fetchCat();
     }, [start])
-    useEffect(() => {
-      console.log(usedTags)
-    }, [usedTags])
     return (
       <>
         {!loading && (<>

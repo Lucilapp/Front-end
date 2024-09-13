@@ -2,13 +2,17 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import CategoryItem from './CategoryItem.jsx'
 
-const CategoryList = (props) => (
+
+const CategoryList = ({navigation, categories}) => {
+  console.log("aaa", navigation)      
+  return(
         <ScrollView style={styles.container}>
-          {props.categories.map((cat, index) => (
+          {categories.map((cat, index) => (
             <CategoryItem key={index} name={cat.Nombre} pending={cat.Pendientes} time={cat.TiempoTarea} id={cat.Id} />
           ))}
-        </ScrollView>
-);
+        </ScrollView>)        
+};
+
 
 const styles = StyleSheet.create({
   container: {

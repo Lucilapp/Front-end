@@ -21,8 +21,8 @@ export default function ChatScreen(props) {
     { id: '10', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
   ]);
 
-/*
-  useEffect(() => {
+
+  /*useEffect(() => {
     async function fetchTask() {
     let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${}`));
     elem = elem[0];
@@ -30,11 +30,11 @@ export default function ChatScreen(props) {
     return elem;
     }
     setTask(fetchTask(id));
-  }, [])
-*/
+  }, [])*/
+
 
   useEffect(() => {
-    socket = io('http://localhost:5000')
+    socket = io('http://localhost:5001')
   }, [])
 
   const renderItem = ({ item }) => (
@@ -83,14 +83,22 @@ export default function ChatScreen(props) {
     sendMsgToSocket(nuevoMsj);
     setvalText('');
   }
+  
+  const sendMsgToSocket = (msg) => {
+    setError('Error')
 
-  const sendMsgToSocket = (msg) =>{
-    var event = "messageSend";
-    var socketId = socket.id;
-    var reciever = props.ClientSocket;
+    try{
+        const event = "messageSend";
+        const socketId = socket.id;
+        const receiver = "a"; // props.ClientSocket;
+        socket.emit(event, socketId, msg, receiver);
+        }
+    catch (error){
+        console.log(error);
+        setError(error.msg)
+    } 
     
-    socket.emit(event, socketId, msg, reciever);
-  }
+};
 
   const flatListRef = useRef(null);
   const handleScrollToEnd = () => {

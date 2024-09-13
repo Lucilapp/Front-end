@@ -7,10 +7,11 @@ export default function SocketTest() {
     const [serverConnected, setServerConnected] = useState(false);
 
     const [stateError, setError] = useState('No hay Error');
+    const urlNgrok = "https://cf81-200-73-176-50.ngrok-free.app";
       useEffect(() => {
         try
         {
-            const newSocket = io('https://cf81-200-73-176-50.ngrok-free.app', { transports : ['websocket'] });
+            const newSocket = io(urlNgrok, { transports : ['websocket'] });
             setSocket(newSocket);
 
             newSocket.on('connect', () => {

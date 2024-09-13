@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
-export default function TaskScreen(props, route) {
+export default function TaskScreen({route, navigation, props}) {
   const { category, id } = route.params;
+  
   const [loading, setLoading] = useState(true);
   const [task, setTask] = useState();
+  console.log(task)
+  console.log("aaaa")
   useEffect(() => {
     async function fetchTask(catId) {
     let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
@@ -17,7 +20,8 @@ export default function TaskScreen(props, route) {
   }, [])
 
   useEffect(() => {
-    console.log(task);
+    console.log("aaaa")
+    console.log(category);
   }, [task])
   const atask = {
     time: '1min',

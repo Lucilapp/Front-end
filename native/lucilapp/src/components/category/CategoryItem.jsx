@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import TaskScreen from '../../app/screens/task/[category]';
 import { useRouter } from 'expo-router';
 import apiCallGET from '../../api/apiCalls';
+import { useNavigation } from '@react-navigation/native';
 
 const CategoryItem = ({ navigation, name, pending, time, id }) => {
   const router = useRouter();
+  console.log("navegacion", navigation)
   const handlePress = () =>{
     navigation.navigate('task', {
       itemId: 86,
