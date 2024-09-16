@@ -1,95 +1,89 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native';
-import { Link, useLocalSearchParams } from 'expo-router';
-import apiCallGET from '../../../api/apiCalls.js'
-export default function TaskScreen({route, navigation, props}) {
+import { useRoute } from '@react-navigation/native'; // Cambiado a useRoute
+import apiCallGET from '../../../api/apiCalls.js';
+
+export default function TaskScreen({ navigation }) {
+  const route = useRoute(); // Usamos useRoute para obtener los parámetros
   const { category, id } = route.params;
-  
+
   const [loading, setLoading] = useState(true);
   const [task, setTask] = useState();
-  console.log(task)
-  console.log("aaaa")
-  useEffect(() => {
-    async function fetchTask(catId) {
-    let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
-    elem = elem[0];
-    setLoading(false);
-    return elem;
-    }
-    setTask(fetchTask(id));
-  }, [])
 
   useEffect(() => {
-    console.log("aaaa")
+    async function fetchTask(catId) {
+      let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
+      elem = elem[0];
+      setLoading(false);
+      setTask(elem);
+    }
+    fetchTask(id);
+  }, []);
+
+  useEffect(() => {
+    console.log("aaaa");
     console.log(category);
-  }, [task])
+  }, [task]);
+
   const atask = {
     time: '1min',
     category: {
-      name: props.category
+      name: category, // Usamos el valor de category pasado por los parámetros
     },
-    description: `Turno Médico:Hospital Italiano\nDepartamento de Laboratorio\nAnálisis de Sangre y Orina\nOrden: SI\nDisponibilidad: Martes o Jueves por la tarde.
-    `,
+    description: `Turno Médico:Hospital Italiano\nDepartamento de Laboratorio\nAnálisis de Sangre y Orina\nOrden: SI\nDisponibilidad: Martes o Jueves por la tarde.`,
     user: {
-      description:`Nombre: Martín Pérez DiSalvo\nEdad: 87 años\nGénero: Masculino\nDNI: 13803268  
-      `
-    }
-  }
-  const handlePress = () =>{
+      description: `Nombre: Martín Pérez DiSalvo\nEdad: 87 años\nGénero: Masculino\nDNI: 13803268`,
+    },
+  };
+
+  const handlePress = () => {
     navigation.navigate('chat', {
-      tarea: task
+      tarea: task,
     });
-  }
+  };
+
   return (
     <>
       {!loading && (
         <>
           <SafeAreaView style={styles.safeAreaView}>
-          <Link href="/" style={{height:30, marginTop:10}}>
-            <Image source={require('../../../../assets/images/arrowLeft.png')} style={styles.backButton} />
-          </Link>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{ height: 30, marginTop: 10 }}>
+              <Image source={require('../../../../assets/images/arrowLeft.png')} style={styles.backButton} />
+            </TouchableOpacity>
 
-          <View style={styles.header}>
-            <Text style={styles.headerText}>Tarea</Text>
-            <View style={styles.headerRight}>
-              <Text style={styles.headerRightText}>Esperando hace</Text>
-              <Text style={styles.headerRightText}>{atask.time}</Text>
-              <Image source={require('../../../../assets/images/clock.png')} style={styles.clockIcon} />
+            <View style={styles.header}>
+              <Text style={styles.headerText}>Tarea</Text>
+              <View style={styles.headerRight}>
+                <Text style={styles.headerRightText}>Esperando hace</Text>
+                <Text style={styles.headerRightText}>{atask.time}</Text>
+                <Image source={require('../../../../assets/images/clock.png')} style={styles.clockIcon} />
+              </View>
             </View>
-          </View>
 
-          <View style={styles.section}> 
-            <Text style={styles.sectionTitle}>Descripción de la tarea</Text>
-            <Text style={styles.sectionTitle}>{atask.category.name}</Text>
-            <Text>{atask.description}</Text>
-          </View>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Descripción de la tarea</Text>
+              <Text style={styles.sectionTitle}>{atask.category.name}</Text>
+              <Text>{atask.description}</Text>
+            </View>
 
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Información del asistido</Text>
-            <Text>{atask.user.description}</Text>
-          </View>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Información del asistido</Text>
+              <Text>{atask.user.description}</Text>
+            </View>
 
-          <TouchableOpacity onPress={handlePress} style={styles.button}>
-            <Text style={styles.buttonText}>Tomar Tarea</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handlePress} style={styles.button}>
+              <Text style={styles.buttonText}>Tomar Tarea</Text>
+            </TouchableOpacity>
           </SafeAreaView>
         </>
       )}
     </>
   );
 }
+
 const styles = StyleSheet.create({
-  safeAreaView:{
+  safeAreaView: {
     marginTop: 30,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    marginLeft: '5%',
-    width: '90%',
-    padding: 20,
-    backgroundColor: '#F5F5F5',
-  },
-  container: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
@@ -101,7 +95,7 @@ const styles = StyleSheet.create({
   backButton: {
     height: 20,
     width: 20,
-    marginBottom:10,
+    marginBottom: 10,
   },
   header: {
     width: '100%',
@@ -138,7 +132,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontWeight: 'bold',
-    fontSize:20,
+    fontSize: 20,
     marginBottom: 5,
   },
   button: {

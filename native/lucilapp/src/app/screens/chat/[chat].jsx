@@ -8,20 +8,8 @@ import {io} from "socket.io-client";
 export default function ChatScreen(props) {
 
   var socket;
-  const [arrayMsj, setArrayMsj] = useState([
-    { id: '1', text: '¡Hola! ¿Cómo estás?', send: true },
-    { id: '2', text: 'Tengo una reunión a las 3 PM.', send: true },
-    { id: '3', text: '¿Te gustaría ir al cine este fin de semana?', send: true },
-    { id: '4', text: 'No podré asistir a la fiesta.', send: false },
-    { id: '5', text: 'El proyecto está casi terminado.', send: true },
-    { id: '6', text: '¿Podrías enviarme el informe?', send: false },
-    { id: '7', text: '¡Feliz cumpleaños!', send: true },
-    { id: '8', text: 'El pedido ha sido enviado.', send: false },
-    { id: '9', text: '¿Has visto la última película de Marvel?', send: true },
-    { id: '10', text: 'Necesito ayuda con la tarea de matemáticas.', send: false },
-  ]);
-
-
+  const [recieverState, setReciever] = useState();
+  var arrayMsj;
   /*useEffect(() => {
     async function fetchTask() {
     let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${}`));
@@ -33,19 +21,33 @@ export default function ChatScreen(props) {
   }, [])*/
 
 
+
   useEffect(() => {
     socket = io('http://localhost:5001')
+    
+    socket.on('messageSend', (socketId, msg, reciever) => {
+      setReciever(reciever);
+      console.log(socketId, msg, reciever);
+      renderItem(msg)
+      //llega un msg
+    });
   }, [])
 
+  useEffect(() => {
+    console.log(socket)
+    socket.emit('messageSend', socket.id, "funciona", "reciever")
+  }, [socket])
+
   const renderItem = ({ item }) => (
+    //msg solo tiene el texto del mensaje (hay q sacar el send/sent y <Msj text={item} style={styles.sent}/>)
       <>
-        {item.send ? 
+        {item.socketId === socket.id ? 
         <View>
-        <Msj text={item.text} style={styles.sent}/>
+        <Msj text={item.msg} style={styles.sent}/>
       </View>
         :
         <View>
-          <Msj text={item.text} style={styles.received}/>
+          <Msj text={item.msg} style={styles.received}/>
         </View>
         }
         
@@ -74,12 +76,6 @@ export default function ChatScreen(props) {
   }, []);
 
   const enviarMsj = () =>{
-    const nuevoMsj = {
-      id: parseInt(arrayMsj[arrayMsj.length - 1].id) + 1,
-      text: valText,
-      send: true  
-    };
-    setArrayMsj([...arrayMsj, nuevoMsj]);
     sendMsgToSocket(nuevoMsj);
     setvalText('');
   }
@@ -90,8 +86,7 @@ export default function ChatScreen(props) {
     try{
         const event = "messageSend";
         const socketId = socket.id;
-        const receiver = "a"; // props.ClientSocket;
-        socket.emit(event, socketId, msg, receiver);
+        socket.emit(event, socketId, msg, recieverState);
         }
     catch (error){
         console.log(error);
@@ -125,7 +120,7 @@ export default function ChatScreen(props) {
         <View style={styles.mensajes}>
           <FlatList
               ref={flatListRef}
-              data={arrayMsj}        
+              data={arrayMsj}
               renderItem={renderItem} 
               keyExtractor={item => item.id}
               ListFooterComponent={<View style={styles.footer} />}

@@ -7,9 +7,11 @@ const apiCallGET = async (endpoint) => {
   let result;
   try {
     result = await axios.get(url);
+    return result.data;
   } catch (error) {
     console.log(error)
+    return [];
   }
-  return result.data;
+  
 }
 export default apiCallGET;
