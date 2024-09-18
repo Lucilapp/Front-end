@@ -3,8 +3,7 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView } from '
 import CategoryItem from './CategoryItem.jsx'
 
 
-const CategoryList = ({navigation, categories}) => {
-  console.log("aaa", navigation)      
+const CategoryList = ({navigation, categories}) => {   
   return(
         <ScrollView style={styles.container}>
           {categories.map((cat, index) => (

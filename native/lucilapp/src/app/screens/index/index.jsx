@@ -16,9 +16,7 @@ export default function HomeScreen({navigation}) {
     useEffect(() => {
       async function fetchCat() {
         const cat =  await apiCallGET('categoria');
-
         const tags =  await apiCallGET('filtro');
-        console.log("cat: ",cat);
         
         setInitialCat(cat);
         setResults(cat);

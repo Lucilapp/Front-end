@@ -9,21 +9,35 @@ export default function TaskScreen({ navigation }) {
 
   const [loading, setLoading] = useState(true);
   const [task, setTask] = useState();
-
+  const [time, setTime] = useState();
+  const [Iduser, setIdUser] = useState();
+  const [user, setUser] = useState();
   useEffect(() => {
     async function fetchTask(catId) {
       let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
       elem = elem[0];
+      console.log("elem", elem)
       setLoading(false);
       setTask(elem);
+      console.log("categoria", category)
+      let date = new Date()
+      setTime((task.TiempoCreacion) - (date));
+      setIdUser(task.IdCliente);
     }
     fetchTask(id);
   }, []);
 
+  /*
+  //fetch para sacar los datos del user
   useEffect(() => {
-    console.log("aaaa");
-    console.log(category);
-  }, [task]);
+    async function fetchTask() {
+      let elem = (await apiCallGET(``)) //endpoint para conseguir datos del usuario;
+      setUser(elem);
+    }
+    fetchTask(id);
+  }, []);
+
+  */
 
   const atask = {
     time: '1min',
@@ -55,7 +69,7 @@ export default function TaskScreen({ navigation }) {
               <Text style={styles.headerText}>Tarea</Text>
               <View style={styles.headerRight}>
                 <Text style={styles.headerRightText}>Esperando hace</Text>
-                <Text style={styles.headerRightText}>{atask.time}</Text>
+                <Text style={styles.headerRightText}>{time}</Text>
                 <Image source={require('../../../../assets/images/clock.png')} style={styles.clockIcon} />
               </View>
             </View>
@@ -63,7 +77,7 @@ export default function TaskScreen({ navigation }) {
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Descripción de la tarea</Text>
               <Text style={styles.sectionTitle}>{atask.category.name}</Text>
-              <Text>{atask.description}</Text>
+              <Text>{task.Descripcion}</Text>
             </View>
 
             <View style={styles.section}>
