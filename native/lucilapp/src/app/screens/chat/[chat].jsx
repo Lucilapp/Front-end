@@ -9,21 +9,13 @@ export default function ChatScreen(props) {
 
   var socket;
   const [recieverState, setReciever] = useState();
-  var arrayMsj;
-  /*useEffect(() => {
-    async function fetchTask() {
-    let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${}`));
-    elem = elem[0];
-    setLoading(false);
-    return elem;
-    }
-    setTask(fetchTask(id));
-  }, [])*/
-
-
+  const [arrayMsj, setArrayMsj] = useState([]);
+  const [lastId, setLastId] = useState(0);
 
   useEffect(() => {
-    socket = io('http://localhost:5001')
+    socket = io('http://localhost:5001', {
+      withCredentials: true
+    })
     
     socket.on('messageSend', (socketId, msg, reciever) => {
       setReciever(reciever);
@@ -32,7 +24,6 @@ export default function ChatScreen(props) {
       //llega un msg
     });
   }, [])
-
   useEffect(() => {
     console.log(socket)
     socket.emit('messageSend', socket.id, "funciona", "reciever")
@@ -41,7 +32,7 @@ export default function ChatScreen(props) {
   const renderItem = ({ item }) => (
     //msg solo tiene el texto del mensaje (hay q sacar el send/sent y <Msj text={item} style={styles.sent}/>)
       <>
-        {item.socketId === socket.id ? 
+        {item.socketId === socket.id ?
         <View>
         <Msj text={item.msg} style={styles.sent}/>
       </View>
@@ -50,7 +41,7 @@ export default function ChatScreen(props) {
           <Msj text={item.msg} style={styles.received}/>
         </View>
         }
-        
+        {handleScrollToEnd()}
       </>
   );
   
@@ -75,13 +66,17 @@ export default function ChatScreen(props) {
     };
   }, []);
 
-  const enviarMsj = () =>{
-    sendMsgToSocket(nuevoMsj);
-    setvalText('');
-  }
   
   const sendMsgToSocket = (msg) => {
-    setError('Error')
+    let array = arrayMsj;
+    let msgObj = {
+      id: lastId + 1,
+      msg: msg
+    };
+    array.push(msgObj);
+    setLastId(lastId + 1);
+    setArrayMsj(array);
+    console.log(arrayMsj)
 
     try{
         const event = "messageSend";
@@ -90,9 +85,9 @@ export default function ChatScreen(props) {
         }
     catch (error){
         console.log(error);
-        setError(error.msg)
     } 
     
+    setvalText('');
 };
 
   const flatListRef = useRef(null);
@@ -121,7 +116,7 @@ export default function ChatScreen(props) {
           <FlatList
               ref={flatListRef}
               data={arrayMsj}
-              renderItem={renderItem} 
+              renderItem={renderItem}
               keyExtractor={item => item.id}
               ListFooterComponent={<View style={styles.footer} />}
             />
@@ -136,7 +131,7 @@ export default function ChatScreen(props) {
             onChangeText={nuevoTexto => setvalText(nuevoTexto)}
           />
           
-          <TouchableOpacity onPress={() => {enviarMsj(); handleScrollToEnd();}}>
+          <TouchableOpacity onPress={() => {sendMsgToSocket(valText);}}>
             <Image source={require('../../../../assets/images/send.png')} style={styles.sendIcon} />
           </TouchableOpacity>
         </View>
@@ -149,7 +144,6 @@ const styles = StyleSheet.create({
   containerInputKeyboard: {
     paddingHorizontal: 20,
     position: 'absolute',
-    top: 530,
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
@@ -166,9 +160,8 @@ const styles = StyleSheet.create({
   containerInput: {
     paddingHorizontal: 20,  
     position: 'absolute',
-    top: 860,
-    width: '100%',
-    paddingTop: -20,
+    width: '95%',
+    top:'90%',
     display: 'flex',
     flexDirection: 'row',
   },
