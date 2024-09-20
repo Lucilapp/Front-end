@@ -32,8 +32,9 @@ export default function ChatScreen(props) {
 
   
 
-  const renderItem = ({ item }) => {
-    console.log("id " + socketId)
+  const renderItem = async ({ item }) => {
+    const newSocket = await io.sockets.connected[socketId];
+    console.log("id " + newSocket)
   
     return (
       <>
@@ -73,14 +74,16 @@ export default function ChatScreen(props) {
   }, []);
 
   
-  const sendMsgToSocket = (msg) => {
+  const sendMsgToSocket = async (msg) => {
+    console.log(await io)
+    const newSocket = await io.sockets.connected[socketId];
     let array = arrayMsj;
     let msgObj = {
       id: lastId + 1,
       msg: msg
     };
     console.log("voy")
-    console.log(socket)
+    console.log(newSocket)
     console.log(socketId)
     array.push(msgObj);
     setLastId(lastId + 1);
@@ -90,7 +93,7 @@ export default function ChatScreen(props) {
     try{
         const event = "messageSend";
 
-        socket.emit(event, socketId, msg, recieverState);
+        newSocket.emit(event, socketId, msg, recieverState);
         }
     catch (error){
         console.log(error);
