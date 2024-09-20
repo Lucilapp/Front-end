@@ -16,10 +16,11 @@ export default function TaskScreen({ navigation }) {
     async function fetchTask(catId) {
       let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
       elem = elem[0];
-      console.log("elem", elem)
+      
       setLoading(false);
       setTask(elem);
-      console.log("categoria", category)
+      console.log("categoria: ", category)
+      console.log("tarea: ", task)
       let date = new Date()
       setTime((task.TiempoCreacion) - (date));
       setIdUser(task.IdCliente);

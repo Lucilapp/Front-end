@@ -8,6 +8,7 @@ import {io} from "socket.io-client";
 export default function ChatScreen(props) {
 
   var socket;
+  const [socketId, setSocketId] = useState();
   const [recieverState, setReciever] = useState();
   const [arrayMsj, setArrayMsj] = useState([]);
   const [lastId, setLastId] = useState(0);
@@ -16,34 +17,39 @@ export default function ChatScreen(props) {
     socket = io('http://localhost:5001', {
       withCredentials: true
     })
-    
+    console.log(socket)
+    socket.on("connect", () => {
+      socket.emit('messageSend', socket.id, "funciona", "reciever")
+      setSocketId(socket.id)
+    });
     socket.on('messageSend', (socketId, msg, reciever) => {
       setReciever(reciever);
-      console.log(socketId, msg, reciever);
       renderItem(msg)
       //llega un msg
     });
-  }, [])
-  useEffect(() => {
-    console.log(socket)
-    socket.emit('messageSend', socket.id, "funciona", "reciever")
-  }, [socket])
 
-  const renderItem = ({ item }) => (
-    //msg solo tiene el texto del mensaje (hay q sacar el send/sent y <Msj text={item} style={styles.sent}/>)
+  }, [])
+
+  
+
+  const renderItem = ({ item }) => {
+    console.log("id " + socketId)
+  
+    return (
       <>
-        {item.socketId === socket.id ?
-        <View>
-        <Msj text={item.msg} style={styles.sent}/>
-      </View>
-        :
-        <View>
-          <Msj text={item.msg} style={styles.received}/>
-        </View>
-        }
+        {item.socketId === socketId ? (
+          <View>
+            <Msj text={item.msg} style={styles.sent} />
+          </View>
+        ) : (
+          <View>
+            <Msj text={item.msg} style={styles.received} />
+          </View>
+        )}
         {handleScrollToEnd()}
       </>
-  );
+    );
+  };  
   
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [valText, setvalText] = useState('');
@@ -73,6 +79,9 @@ export default function ChatScreen(props) {
       id: lastId + 1,
       msg: msg
     };
+    console.log("voy")
+    console.log(socket)
+    console.log(socketId)
     array.push(msgObj);
     setLastId(lastId + 1);
     setArrayMsj(array);
@@ -80,7 +89,7 @@ export default function ChatScreen(props) {
 
     try{
         const event = "messageSend";
-        const socketId = socket.id;
+
         socket.emit(event, socketId, msg, recieverState);
         }
     catch (error){
