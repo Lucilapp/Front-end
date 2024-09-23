@@ -4,41 +4,32 @@ import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
 import Msj from '../../../components/chat/chatMsj.jsx';
 import {io} from "socket.io-client";
+import { socket } from '../../../api/socket.js';
 
 export default function ChatScreen(props) {
 
-  var socket;
-  const [socketId, setSocketId] = useState();
+  const [socketId, setSocketId] = useState(socket.id);
   const [recieverState, setReciever] = useState(props.route.params.tarea.ClientSocket);
   const [arrayMsj, setArrayMsj] = useState([]);
   const [lastId, setLastId] = useState(0);
-  console.log(props.route.params)
 
-  // useEffect(() => {
-  //   socket = io('http://localhost:5001', {
-  //     withCredentials: true,
-  //     mode: 'cors',
-	//         headers: {
-  //           	'Access-Control-Allow-Origin': 'http://localhost:5001',
-  //       	}
-  //   })
-  //   console.log(socket)
-  //   socket.on("connect", () => {
-  //     socket.emit('messageSend', socket.id, "funciona", "reciever")
-  //     setSocketId(socket.id)
-  //   });
-  //   socket.on('messageSend', (socketId, msg, reciever) => {
-  //     setReciever(reciever);
-  //     renderItem(msg)
-  //     //llega un msg
-  //   });
+  useEffect(() => {
+    socket.on("connect", () => {
+      socket.emit('messageSend', socket.id, "funciona", "reciever")
+      setSocketId(socket.id)
+    });
+    socket.on('messageSend', (socketId, msg, reciever) => {
+      setReciever(reciever);
+      renderItem(msg)
+      //llega un msg
+    });
 
-  // }, [])
+  }, [])
 
   
 
-  const renderItem =  ({ item }) => {
-
+  const renderItem = ({ item }) => {
+  
     return (
       <>
         {item.socketId === socketId ? (
@@ -77,7 +68,30 @@ export default function ChatScreen(props) {
   }, []);
 
   
+  const sendMsgToSocket = (msg) => {
+    let array = arrayMsj;
+    let msgObj = {
+      id: lastId + 1,
+      msg: msg
+    };
+    console.log("voy")
+    console.log(socketId)
+    array.push(msgObj);
+    setLastId(lastId + 1);
+    setArrayMsj(array);
+    console.log(arrayMsj)
 
+    try{
+        const event = "messageSend";
+
+        socket.emit(event, socketId, msg, recieverState);
+        }
+    catch (error){
+        console.log(error);
+    } 
+    
+    setvalText('');
+};
 
   const flatListRef = useRef(null);
   const handleScrollToEnd = () => {
@@ -120,7 +134,7 @@ export default function ChatScreen(props) {
             onChangeText={nuevoTexto => setvalText(nuevoTexto)}
           />
           
-          <TouchableOpacity onPress={() => {props.route.params.sendMsgToSocket(valText);}}>
+          <TouchableOpacity onPress={() => {sendMsgToSocket(valText);}}>
             <Image source={require('../../../../assets/images/send.png')} style={styles.sendIcon} />
           </TouchableOpacity>
         </View>
