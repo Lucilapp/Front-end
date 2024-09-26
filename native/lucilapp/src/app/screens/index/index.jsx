@@ -17,7 +17,7 @@ export default function HomeScreen({navigation}) {
       async function fetchCat() {
         const cat =  await apiCallGET('categoria');
         const tags =  await apiCallGET('filtro');
-        
+        //aca hay que sacar que ponga las que no tiene pendientes
         setInitialCat(cat);
         setResults(cat);
         setInitialTags(tags);

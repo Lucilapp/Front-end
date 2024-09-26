@@ -12,6 +12,7 @@ export default function ChatScreen(props) {
   const [recieverState, setReciever] = useState(props.route.params.tarea.ClientSocket);
   const [arrayMsj, setArrayMsj] = useState([]);
   const [lastId, setLastId] = useState(0);
+  const [lastMsgArray, setLastMsgArray] = useState([]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -26,13 +27,47 @@ export default function ChatScreen(props) {
 
   }, [])
 
-  
 
+  socket.on('recieveMessage', (msg, senderId) => {
+    console.log(msg)
+    if(lastMsgArray.length - 1 !== -1){
+      console.log(lastMsgArray[lastMsgArray.length - 1])
+      console.log(msg !== lastMsgArray[lastMsgArray.length - 1])
+      if(msg !== lastMsgArray[lastMsgArray.length - 1]){
+        console.log("built next")
+        buildMsg(msg, false);
+        submitToLastMessageArray(msg);
+      }
+    }
+    else {
+      console.log("built first")
+      buildMsg(msg, false);
+      submitToLastMessageArray(msg);
+    }
+  })
+
+  const submitToLastMessageArray = (msg) => {
+    let varArray = lastMsgArray;
+    varArray.push(msg);
+    setLastMsgArray(varArray);
+  }
+
+  const buildMsg = (msg, isClient) => {
+    let message = {
+      id: lastId + 1,
+      msg: msg,
+      client: isClient
+    }
+    let array = arrayMsj;
+    array.push(message);
+    setArrayMsj(array);
+    setLastId(lastId + 1);
+  } 
   const renderItem = ({ item }) => {
-  
+    console.log(JSON.stringify(item) + " " + socketId)
     return (
       <>
-        {item.socketId === socketId ? (
+        {item.client ? (
           <View>
             <Msj text={item.msg} style={styles.sent} />
           </View>
@@ -69,18 +104,7 @@ export default function ChatScreen(props) {
 
   
   const sendMsgToSocket = (msg) => {
-    let array = arrayMsj;
-    let msgObj = {
-      id: lastId + 1,
-      msg: msg
-    };
-    console.log("voy")
-    console.log(socketId)
-    array.push(msgObj);
-    setLastId(lastId + 1);
-    setArrayMsj(array);
-    console.log(arrayMsj)
-
+    buildMsg(msg, true);
     try{
         const event = "messageSend";
 
@@ -88,9 +112,8 @@ export default function ChatScreen(props) {
         }
     catch (error){
         console.log(error);
-    } 
-    
-    setvalText('');
+    }
+    setvalText('')
 };
 
   const flatListRef = useRef(null);
