@@ -2,11 +2,20 @@ import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import CategoryItem from './CategoryItem.jsx';
 import { useEffect, useState } from 'react';
+import apiCallGET from '../../api/apiCalls.js';
 
 const CategoryList = ({ navigation, categories }) => {
-  console.log(categories.returnArray)
-  
+  const [task, setTask] = useState(null);
   const [results, setResults] = useState([]);
+  const [loaded, setLoaded] = useState(false)
+  async function fetchTask(catId) {
+    if(!loaded){
+      
+    }
+  }
+
+ 
+  
   const filtrarArray = (array) => {
     let result = [];
     array.forEach(element => {
@@ -24,14 +33,16 @@ const CategoryList = ({ navigation, categories }) => {
     <FlatList
       data={results}
       keyExtractor={(item, index) => item.Id.toString()}
-      renderItem={({ item }) => (
-        <CategoryItem
+      renderItem={({ item }) => {
+        
+        return(
+          <CategoryItem
           name={item.Nombre}
           pending={item.Pendientes}
-          time={item.TiempoCreacion}
           id={item.Id}
         />
-      )}
+        )
+      }}
       contentContainerStyle={styles.container}
     />
   );

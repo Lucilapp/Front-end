@@ -29,10 +29,8 @@ export default function ChatScreen(props) {
 
 
   socket.on('recieveMessage', (msg, senderId) => {
-    console.log(msg)
+
     if(lastMsgArray.length - 1 !== -1){
-      console.log(lastMsgArray[lastMsgArray.length - 1])
-      console.log(msg !== lastMsgArray[lastMsgArray.length - 1])
       if(msg !== lastMsgArray[lastMsgArray.length - 1]){
         console.log("built next")
         buildMsg(msg, false);
@@ -64,7 +62,6 @@ export default function ChatScreen(props) {
     setLastId(lastId + 1);
   } 
   const renderItem = ({ item }) => {
-    console.log(JSON.stringify(item) + " " + socketId)
     return (
       <>
         {item.client ? (

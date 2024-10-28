@@ -7,7 +7,7 @@ const SearchBar = (props) => {
     const handleSearch = (text) => {
         setSearchQuery(text);
         text = removeAccents(text);
-        const filteredCategories = props.categories.filter(category =>
+        const filteredCategories = props.categories.returnArray.filter(category =>
         removeAccents(category.Nombre.toLowerCase()).includes(text.toLowerCase())
         );
         props.setResults(filteredCategories);

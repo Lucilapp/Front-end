@@ -1,19 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import apiCallGET from '../../api/apiCalls';
+import { convertTypeAcquisitionFromJson } from 'typescript';
 
-const CategoryItem = ({ name, pending, time, id }) => {
+const CategoryItem = ({ name, pending, id }) => {
   const navigation = useNavigation(); // Usa el hook para obtener la navegación
   
+  const [task, setTask] = useState(null);
+  const [time, setTime] = useState(null);
   const handlePress = () => {
     navigation.navigate('task', {
       category: name,
       id: id,
     });
   }
-  
-  const timeText = `Hace ${time}min`;
-  const pendingText = ` Pendientes`;
+
+  useEffect(async () => {
+    let elem = await getLastTask();
+    console.log(elem)
+    elem = elem[0];
+    setTask(elem);
+  }, [])
+
+  useEffect(() => {
+    console.log("task: " + task)
+    if(task) {
+      let date = Date.now()
+    date = new Date(date)
+    let creacion = new Date(task.TiempoCreacion)
+    setTime(Math.round((date - creacion)/60000));
+    }
+  }, [task])
+
+  useEffect(() => {
+    console.log(time)
+  }, [time])
+  const getLastTask = async () => {
+    return await apiCallGET(`tarea/idCategoria?idCategoria=${id}`);  
+  }
 
   return (
     <View>
@@ -23,14 +48,14 @@ const CategoryItem = ({ name, pending, time, id }) => {
           <View style={styles.column}>
             <View style={styles.details}>
               <Text style={styles.boldText}>{pending}</Text>
-              <Text style={styles.text}>{pendingText}</Text>
+              <Text style={styles.text}> Pendientes</Text>
             </View>
             <View style={styles.timeContainer}>
               <Image
                 source={require('../../../assets/images/clock.png')}
                 style={styles.clockIcon}
               />
-              <Text style={styles.text}>{timeText}</Text>
+              <Text style={styles.text}>Hace {time} min</Text>
             </View>
           </View>
         </View>

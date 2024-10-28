@@ -16,7 +16,6 @@ export default function TaskScreen({ navigation }) {
     async function fetchTask(catId) {
       let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
       elem = elem[0];
-      console.log(elem)
       setLoading(false);
       setTask(elem);
     }

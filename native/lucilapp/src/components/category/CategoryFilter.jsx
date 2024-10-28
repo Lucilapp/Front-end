@@ -18,6 +18,7 @@ const CategoryFilter = (props) => {
         const updatedTags = tags.filter(tag => tag !== tagToRemove);  
         props.setTags(updatedTags);
     };
+    console.log(props)
     
     return(
         <View style={props.style}>
@@ -47,7 +48,6 @@ const styles = StyleSheet.create({
     },
     filterContainer:{
         width: 390,
-        left: -362,
         top: 20,
         backgroundColor:"#82bdfa90",
         marginBottom:30,
