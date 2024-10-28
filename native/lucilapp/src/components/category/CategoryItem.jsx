@@ -7,12 +7,11 @@ const CategoryItem = ({ name, pending, time, id }) => {
   
   const handlePress = () => {
     navigation.navigate('task', {
-      itemId: 86,
       category: name,
       id: id,
     });
   }
-
+  
   const timeText = `Hace ${time}min`;
   const pendingText = ` Pendientes`;
 

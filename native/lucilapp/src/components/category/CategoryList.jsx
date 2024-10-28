@@ -1,12 +1,28 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import CategoryItem from './CategoryItem.jsx';
+import { useEffect, useState } from 'react';
 
 const CategoryList = ({ navigation, categories }) => {
   console.log(categories.returnArray)
+  
+  const [results, setResults] = useState([]);
+  const filtrarArray = (array) => {
+    let result = [];
+    array.forEach(element => {
+      if(element.Pendientes > 0){
+        setResults[results.push(element)]
+      }
+    });
+    return result;
+  }
+  useEffect(() => {
+    filtrarArray(categories.returnArray)
+  }, [])
+
   return (
     <FlatList
-      data={categories.returnArray}
+      data={results}
       keyExtractor={(item, index) => item.Id.toString()}
       renderItem={({ item }) => (
         <CategoryItem
