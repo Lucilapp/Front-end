@@ -18,13 +18,11 @@ const CategoryItem = ({ name, pending, id }) => {
 
   useEffect(async () => {
     let elem = await getLastTask();
-    console.log(elem)
     elem = elem[0];
     setTask(elem);
   }, [])
 
   useEffect(() => {
-    console.log("task: " + task)
     if(task) {
       let date = Date.now()
     date = new Date(date)
@@ -32,10 +30,6 @@ const CategoryItem = ({ name, pending, id }) => {
     setTime(Math.round((date - creacion)/60000));
     }
   }, [task])
-
-  useEffect(() => {
-    console.log(time)
-  }, [time])
   const getLastTask = async () => {
     return await apiCallGET(`tarea/idCategoria?idCategoria=${id}`);  
   }

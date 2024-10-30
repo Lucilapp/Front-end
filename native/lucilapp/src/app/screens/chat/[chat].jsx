@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef  } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView, FlatList, TextInput, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView, FlatList, TextInput, Keyboard, Modal } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
 import Msj from '../../../components/chat/chatMsj.jsx';
@@ -13,6 +13,7 @@ export default function ChatScreen(props) {
   const [arrayMsj, setArrayMsj] = useState([]);
   const [lastId, setLastId] = useState(0);
   const [lastMsgArray, setLastMsgArray] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -118,21 +119,63 @@ export default function ChatScreen(props) {
     flatListRef.current.scrollToEnd({ animated: true });
   };
 
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleModalNav = () => {
+    socket.emit('chatDisconnect', socketId, recieverState);
+    navigation.navigate('index', {
+    });
+  };
+  const handleModalInfo = () => {
+    //display de toda la info del cliente
+  };
+
   return (
     <>
         
         <View style={styles.header}>
-            {/*<Image source={require('IMAGEN DE ADULTO MAYOR')}/>*/}
             <Text style={styles.headerText}>Nombre adulto mayor</Text>
         </View>
         <View style={styles.section}>
           <View style={styles.flexSmall}>
-            <Image source={require('../../../../assets/images/infoIcon.png')} style={styles.InfoIcon} />
+            <TouchableOpacity onPress={handleModalInfo}>
+              <Image source={require('../../../../assets/images/infoIcon.png')} style={styles.InfoIcon} />
+            </TouchableOpacity>
           </View>
           <View style={styles.flexLarge}>
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Terminar Tarea</Text>
-            </TouchableOpacity>
+            <View>
+              <View style={styles.container}>
+                <TouchableOpacity style={styles.button} onPress={handleOpenModal}>
+                  <Text style={styles.buttonText}>Terminar Tarea</Text>
+                </TouchableOpacity>
+              </View>
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={handleCloseModal}
+              >
+                <View style={styles.modalContainer}>
+                  <View style={styles.modalContent}>
+                    <Text style={styles.modalText}>¿Estás seguro de que deseas terminar la tarea?</Text>
+                    <View style={styles.buttonRow}>
+                      <TouchableOpacity style={styles.confirmButton} onPress={handleCloseModal}>
+                        <Text style={styles.buttonText}>Cancelar</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.confirmButton} onPress={handleModalNav}>
+                        <Text style={styles.buttonText}>Confirmar</Text>
+                      </TouchableOpacity>
+                    </View> 
+                  </View>
+                </View>
+              </Modal>
+            </View>
           </View>
         </View>
         <View style={styles.mensajes}>
@@ -164,6 +207,34 @@ export default function ChatScreen(props) {
 }
 
 const styles = StyleSheet.create({
+  buttonRow:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 'bold',
+  },
+  confirmButton: {
+    backgroundColor: '#28a745',
+    borderRadius: 5,
+    padding: 10,
+    width: '40%', 
+    alignItems: 'center',
+  },
   containerInputKeyboard: {
     paddingHorizontal: 20,
     position: 'absolute',
@@ -232,13 +303,12 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: '#000',
   },
   container: {
     display: "flex",
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: '#C6A0FF',
@@ -247,6 +317,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 17,
+    width: '80%',
   },
   buttonText: {
     color: '#000',

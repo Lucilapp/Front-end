@@ -18,7 +18,6 @@ const CategoryFilter = (props) => {
         const updatedTags = tags.filter(tag => tag !== tagToRemove);  
         props.setTags(updatedTags);
     };
-    console.log(props)
     
     return(
         <View style={props.style}>
