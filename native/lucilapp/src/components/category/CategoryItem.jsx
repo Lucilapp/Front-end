@@ -9,6 +9,7 @@ const CategoryItem = ({ name, pending, id }) => {
   
   const [task, setTask] = useState(null);
   const [time, setTime] = useState(null);
+  const [taskArray, setTaskArray] = useState(null)
   const handlePress = () => {
     navigation.navigate('task', {
       category: name,
@@ -16,18 +17,24 @@ const CategoryItem = ({ name, pending, id }) => {
     });
   }
 
-  useEffect(async () => {
-    let elem = await getLastTask();
-    elem = elem[0];
-    setTask(elem);
+  useEffect(() => {
+    const f = async () => {
+      return elem = await getLastTask();
+    }
+    setTaskArray(f())
   }, [])
-
+  useEffect(() => {
+    if(taskArray){
+      let t = taskArray[0];
+      setTask(t);
+    }
+  },[taskArray])
   useEffect(() => {
     if(task) {
       let date = Date.now()
-    date = new Date(date)
-    let creacion = new Date(task.TiempoCreacion)
-    setTime(Math.round((date - creacion)/60000));
+      date = new Date(date)
+      let creacion = new Date(task.TiempoCreacion)
+      setTime(Math.round((date - creacion)/60000));
     }
   }, [task])
   const getLastTask = async () => {

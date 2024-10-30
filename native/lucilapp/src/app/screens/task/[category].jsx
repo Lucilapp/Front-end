@@ -11,12 +11,11 @@ export default function TaskScreen({ navigation }) {
   const [task, setTask] = useState(null);
   const [time, setTime] = useState();
   const [Iduser, setIdUser] = useState();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   useEffect(() => {
     async function fetchTask(catId) {
       let elem = (await apiCallGET(`tarea/idCategoria?idCategoria=${catId}`));
       elem = elem[0];
-      setLoading(false);
       setTask(elem);
     }
     fetchTask(id);
@@ -33,24 +32,25 @@ export default function TaskScreen({ navigation }) {
   //fetch para sacar los datos del user
   useEffect(() => {
     async function fetchTask() {
-      let elem = (await apiCallGET(``))
-      setUser(elem);
+      if(Iduser){
+        let elem = (await apiCallGET(`cliente/${Iduser}`))
+        setUser(elem[0]);
+      }    
     }
     fetchTask(id);
-  }, []);
+  }, [Iduser]);
 
+  useEffect(() => {
+    if(user){
+      console.log(user)
+    }
+  }, [user]);
 
-  const atask = {
-    time: '1min',
-    category: {
-      name: category, // Usamos el valor de category pasado por los parámetros
-    },
-    description: `Turno Médico:Hospital Italiano\nDepartamento de Laboratorio\nAnálisis de Sangre y Orina\nOrden: SI\nDisponibilidad: Martes o Jueves por la tarde.`,
-    user: {
-      description: `Nombre: Martín Pérez DiSalvo\nEdad: 87 años\nGénero: Masculino\nDNI: 13803268`,
-    },
-  };
-
+  useEffect(() => {
+    if(user && task){
+      setLoading(false)
+    }
+  }, [user, task]);
   const handlePress = () => {
     navigation.navigate('chat', {
       tarea: task,
@@ -82,7 +82,9 @@ export default function TaskScreen({ navigation }) {
 
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Información del asistido</Text>
-              <Text>{atask.user.description}</Text>
+              <Text>Nombre: {user.Nombre}</Text>
+              <Text>Edad: {user.Edad}</Text>
+              <Text>Genero: {user.Genero}</Text>
             </View>
 
             <TouchableOpacity onPress={handlePress} style={styles.button}>
