@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 import CategoryItem from './CategoryItem.jsx';
 import { useEffect, useState } from 'react';
 import apiCallGET from '../../api/apiCalls.js';
@@ -27,21 +27,24 @@ const CategoryList = ({ navigation, categories }) => {
   }, [])
 
   return (
-    <FlatList
-      data={results}
-      keyExtractor={(item, index) => item.Id.toString()}
-      renderItem={({ item }) => {
-        
-        return(
-          <CategoryItem
-          name={item.Nombre}
-          pending={item.Pendientes}
-          id={item.Id}
-        />
-        )
-      }}
-      contentContainerStyle={styles.container}
-    />
+    <>
+      <FlatList
+        data={results}
+        keyExtractor={(item, index) => item.Id.toString()}
+        renderItem={({ item }) => {
+          
+          return(
+            <CategoryItem
+            name={item.Nombre}
+            pending={item.Pendientes}
+            id={item.Id}
+          />
+          )
+        }}
+        contentContainerStyle={styles.container}
+      />
+      {results.length <= 0 ? <Text>No hay Tareas disponibles</Text>:<></>}
+    </>
   );
 };
 
