@@ -41,12 +41,6 @@ export default function TaskScreen({ navigation }) {
   }, [Iduser]);
 
   useEffect(() => {
-    if(user){
-      console.log(user)
-    }
-  }, [user]);
-
-  useEffect(() => {
     if(user && task){
       setLoading(false)
     }
@@ -54,6 +48,7 @@ export default function TaskScreen({ navigation }) {
   const handlePress = () => {
     navigation.navigate('chat', {
       tarea: task,
+      user: user,
     });
   };
 

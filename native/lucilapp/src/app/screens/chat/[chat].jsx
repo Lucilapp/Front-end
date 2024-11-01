@@ -10,10 +10,12 @@ export default function ChatScreen(props) {
 
   const [socketId, setSocketId] = useState(socket.id);
   const [recieverState, setReciever] = useState(props.route.params.tarea.ClientSocket);
+  const [user, setUser] = useState(props.route.params.user);
   const [arrayMsj, setArrayMsj] = useState([]);
   const [lastId, setLastId] = useState(0);
   const [lastMsgArray, setLastMsgArray] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTareaVisible, setModalTareaVisible] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -119,12 +121,16 @@ export default function ChatScreen(props) {
     flatListRef.current.scrollToEnd({ animated: true });
   };
 
-  const handleCloseModal = () => {
-    setModalVisible(false);
+  const handleCloseModalTarea = () => {
+    setModalTareaVisible(false);
   };
 
-  const handleOpenModal = () => {
-    setModalVisible(true);
+  const handleCloseModalInfo = () => {
+    setModalInfo(false);
+  };
+
+  const handleOpenModalTarea = () => {
+    setModalTareaVisible(true);
   };
 
   const handleModalNav = () => {
@@ -132,52 +138,71 @@ export default function ChatScreen(props) {
     navigation.navigate('index', {
     });
   };
-  const handleModalInfo = () => {
-    //display de toda la info del cliente
+  const handleOpenModalInfo = () => {
+    setModalInfo(true);
   };
 
   return (
     <>
         
         <View style={styles.header}>
-            <Text style={styles.headerText}>Nombre adulto mayor</Text>
+            <Text style={styles.headerText}>{user.Nombre}</Text>
         </View>
         <View style={styles.section}>
-          <View style={styles.flexSmall}>
-            <TouchableOpacity onPress={handleModalInfo}>
-              <Image source={require('../../../../assets/images/infoIcon.png')} style={styles.InfoIcon} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.flexLarge}>
-            <View>
-              <View style={styles.container}>
-                <TouchableOpacity style={styles.button} onPress={handleOpenModal}>
-                  <Text style={styles.buttonText}>Terminar Tarea</Text>
-                </TouchableOpacity>
-              </View>
+          <View>
+            <View style={styles.flexSmall}>
+              <TouchableOpacity onPress={handleOpenModalInfo}>
+                <Image source={require('../../../../assets/images/infoIcon.png')} style={styles.InfoIcon} />
+              </TouchableOpacity>
+            </View>
               <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible}
-                onRequestClose={handleCloseModal}
+                visible={modalInfo}
+                onRequestClose={handleCloseModalInfo}
               >
-                <View style={styles.modalContainer}>
+                <View style={styles.modalOverlay}>
                   <View style={styles.modalContent}>
-                    <Text style={styles.modalText}>¿Estás seguro de que deseas terminar la tarea?</Text>
-                    <View style={styles.buttonRow}>
-                      <TouchableOpacity style={styles.confirmButton} onPress={handleCloseModal}>
-                        <Text style={styles.buttonText}>Cancelar</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.confirmButton} onPress={handleModalNav}>
-                        <Text style={styles.buttonText}>Confirmar</Text>
-                      </TouchableOpacity>
-                    </View> 
+                    <TouchableOpacity onPress={handleCloseModalInfo} style={styles.closeButton}>
+                      <Text style={styles.closeButtonText}>✖</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.modalText}>Nombre:  {user.Nombre}</Text>
+                    <Text style={styles.modalText}>Edad:  {user.Edad}</Text>
+                    <Text style={styles.modalText}>Genero:  {user.Genero}</Text>
                   </View>
                 </View>
               </Modal>
+          </View>
+            <View style={styles.flexLarge}>
+              <View>
+                <View style={styles.container}>
+                  <TouchableOpacity style={styles.button} onPress={handleOpenModalTarea}>
+                    <Text style={styles.buttonText}>Terminar Tarea</Text>
+                  </TouchableOpacity>
+                </View>
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalTareaVisible}
+                  onRequestClose={handleCloseModalTarea}
+                >
+                  <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                      <Text style={styles.modalText}>¿Estás seguro de que deseas terminar la tarea?</Text>
+                      <View style={styles.buttonRow}>
+                        <TouchableOpacity style={styles.confirmButton} onPress={handleCloseModalTarea}>
+                          <Text style={styles.buttonText}>Cancelar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.confirmButton} onPress={handleModalNav}>
+                          <Text style={styles.buttonText}>Confirmar</Text>
+                        </TouchableOpacity>
+                      </View> 
+                    </View>
+                  </View>
+                </Modal>
+              </View>
             </View>
           </View>
-        </View>
         <View style={styles.mensajes}>
           <FlatList
               ref={flatListRef}
@@ -207,6 +232,20 @@ export default function ChatScreen(props) {
 }
 
 const styles = StyleSheet.create({
+  closeButtonText: {
+    fontSize: 24,
+    color: 'black',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   buttonRow:{
     flexDirection: 'row',
     justifyContent: 'space-between',

@@ -18,32 +18,37 @@ const CategoryItem = ({ name, pending, id }) => {
   }
 
   useEffect(() => {
-    const f = async () => {
-      return elem = await getLastTask();
+    const func = async () => {
+      let elem = await getLastTask();
+      setTaskArray(elem);
     }
-    setTaskArray(f())
+    func();
   }, [])
+
   useEffect(() => {
-    if(taskArray){
-      let t = taskArray[0];
-      setTask(t);
+    if(taskArray && taskArray.length > 0){
+      let tarea = taskArray[0];
+      setTask(tarea);
     }
   },[taskArray])
+
   useEffect(() => {
     if(task) {
+
       let date = Date.now()
       date = new Date(date)
       let creacion = new Date(task.TiempoCreacion)
-      setTime(Math.round((date - creacion)/60000));
+      setTime(Math.round((date - creacion)/60000));  
     }
   }, [task])
+
   const getLastTask = async () => {
     return await apiCallGET(`tarea/idCategoria?idCategoria=${id}`);  
   }
 
   return (
     <View>
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity onPress={handlePress}>  
         <View style={styles.container}>
           <Text style={styles.title}>{name}</Text>
           <View style={styles.column}>

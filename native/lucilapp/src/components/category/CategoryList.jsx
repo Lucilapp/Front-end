@@ -13,9 +13,6 @@ const CategoryList = ({ navigation, categories }) => {
       
     }
   }
-
- 
-  
   const filtrarArray = (array) => {
     let result = [];
     array.forEach(element => {
