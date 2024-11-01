@@ -2,20 +2,24 @@ import React, { useState, useEffect, useRef  } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, SafeAreaView, ScrollView, FlatList, TextInput, Keyboard, Modal } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import apiCallGET from '../../../api/apiCalls.js'
+import apiCallDelete from '../../../api/apiCallDelete.js';
 import Msj from '../../../components/chat/chatMsj.jsx';
 import {io} from "socket.io-client";
 import { socket } from '../../../api/socket.js';
+
 
 export default function ChatScreen(props) {
 
   const [socketId, setSocketId] = useState(socket.id);
   const [recieverState, setReciever] = useState(props.route.params.tarea.ClientSocket);
   const [user, setUser] = useState(props.route.params.user);
+  const [taskId, setTaskId] = useState (props.route.params.tarea.Id);
   const [arrayMsj, setArrayMsj] = useState([]);
   const [lastId, setLastId] = useState(0);
   const [lastMsgArray, setLastMsgArray] = useState([]);
   const [modalTareaVisible, setModalTareaVisible] = useState(false);
   const [modalInfo, setModalInfo] = useState(false);
+
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -134,6 +138,7 @@ export default function ChatScreen(props) {
   };
 
   const handleModalNav = () => {
+    apiCallDelete(`tarea/${taskId}`)
     socket.emit('chatDisconnect', socketId, recieverState);
     navigation.navigate('index', {
     });
