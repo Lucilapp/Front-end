@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View } from 'react-native';
+import { Image, StyleSheet, Platform, View, Touchable, TouchableOpacity, Text } from 'react-native';
 import { SafeAreaView } from 'react-native';
 import { useEffect, useState } from 'react';
 import CategoryList from '../../../components/category/CategoryList.jsx';
@@ -25,6 +25,10 @@ export default function HomeScreen({navigation}) {
       }
       fetchCat();
     }, [start])
+    const handlePress = () => {
+      navigation.navigate('register', {
+      });
+    }
     return (
       <>
         {!loading && (<>
@@ -38,7 +42,11 @@ export default function HomeScreen({navigation}) {
             <View style={styles.main}>
               <CategoryList categories = {results}/>
             </View>
-            <View style={styles.footer}/>
+            <View style={styles.footer}>
+              <TouchableOpacity onPress={handlePress}>
+                <Text>Register</Text>
+              </TouchableOpacity>
+            </View>
           </SafeAreaView>
         </>)}
       </>
@@ -48,7 +56,6 @@ export default function HomeScreen({navigation}) {
   const styles = StyleSheet.create({
     main: {
       flex: 1,
-      minHeight:1000,
     },
     safeAreaView:{
       marginTop: 10
