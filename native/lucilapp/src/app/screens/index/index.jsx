@@ -31,6 +31,8 @@ export default function HomeScreen({navigation}) {
           <SafeAreaView style={styles.safeAreaView}>
             <View style={styles.row}>
               <SearchBar categories = {initialCat} setResults = {setResults}/>
+            </View>
+            <View style={styles.filterContainer}>
               <CategoryFilter style={styles.filter} tags = {initialTags} usedTags = {usedTags} setTags = {setUsedTags}/>
             </View>
             <View style={styles.main}>
@@ -56,8 +58,18 @@ export default function HomeScreen({navigation}) {
       flexDirection: 'row',
     },
     filter: {
-      marginTop: 8,
-      zIndex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end'
+    },
+    filterContainer: {
+      position: 'absolute',
+      top: 10,
+      width: '95%',
+      height: 30,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
     },
     titleContainer: {
       flexDirection: 'row',

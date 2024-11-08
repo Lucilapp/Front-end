@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     filterContainer:{
         width: 390,
-        top: 20,
+        top: 30,
         backgroundColor:"#82bdfa90",
         marginBottom:30,
         borderRadius: 20,
@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
         flexWrap: "wrap",
+        marginBottom:10,
     }
 })
 export default CategoryFilter;

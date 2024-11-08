@@ -167,7 +167,7 @@ export default function ChatScreen(props) {
                 onRequestClose={handleCloseModalInfo}
               >
                 <View style={styles.modalOverlay}>
-                  <View style={styles.modalContent}>
+                  <View style={styles.modalContentInfo}>
                     <TouchableOpacity onPress={handleCloseModalInfo} style={styles.closeButton}>
                       <Text style={styles.closeButtonText}>✖</Text>
                     </TouchableOpacity>
@@ -193,10 +193,10 @@ export default function ChatScreen(props) {
                 >
                   <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
-                      <Text style={styles.modalText}>¿Estás seguro de que deseas terminar la tarea?</Text>
+                      <Text style={styles.modalText}>Estas seguro que queres finalizar esta tarea?</Text>
                       <View style={styles.buttonRow}>
                         <TouchableOpacity style={styles.confirmButton} onPress={handleCloseModalTarea}>
-                          <Text style={styles.buttonText}>Cancelar</Text>
+                          <Text style={styles.buttonTextCancel}>Cancelar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.confirmButton} onPress={handleModalNav}>
                           <Text style={styles.buttonText}>Confirmar</Text>
@@ -264,17 +264,24 @@ const styles = StyleSheet.create({
   modalContent: {
     width: 300,
     padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 10,
+    backgroundColor: '#C6A0FF',
+    borderRadius: 22,
+  },
+  modalContentInfo: {
+    width: 300,
+    padding: 20,
+    backgroundColor: '#B2DEFF',
+    borderRadius: 15, 
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    fontSize: 'bold',
+    fontSize: 'larger',
+    fontWeight: '650'
   },
   confirmButton: {
-    backgroundColor: '#28a745',
-    borderRadius: 5,
+    backgroundColor: '#B2DEFF',
+    borderRadius: 15,
     padding: 10,
     width: '40%', 
     alignItems: 'center',
@@ -366,6 +373,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000',
     fontWeight: 'bold',
+    fontSize: 16,
+  },
+  buttonTextCancel: {
+    color: '#000',
+    fontWeight: 'semi-bold',
     fontSize: 16,
   },
   section: {
