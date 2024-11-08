@@ -5,6 +5,7 @@ import CategoryList from '../../../components/category/CategoryList.jsx';
 import SearchBar from '../../../components/searchBar/SearchBar.jsx';
 import CategoryFilter from '../../../components/category/CategoryFilter.jsx';
 import apiCallGET from '../../../api/apiCalls.js';
+import NavBar from '../../../components/NavBar/NavBar.jsx';
 
 export default function HomeScreen({navigation}) {
     const [initialCat, setInitialCat] = useState();
@@ -40,6 +41,7 @@ export default function HomeScreen({navigation}) {
             </View>
             <View style={styles.footer}/>
           </SafeAreaView>
+          <NavBar></NavBar>
         </>)}
       </>
     );
