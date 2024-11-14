@@ -27,7 +27,7 @@ export default function HomeScreen({navigation}) {
       fetchCat();
     }, [start])
     const handlePress = () => {
-      navigation.navigate('register', {
+      navigation.navigate('Register', {
       });
     }
     return (

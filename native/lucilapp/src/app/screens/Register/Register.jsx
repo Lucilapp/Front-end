@@ -2,40 +2,75 @@ import { Image, StyleSheet, Platform, View, Text, SafeAreaView, TextInput, Touch
 import { useEffect, useState } from 'react';
 
 
-export default function LoginScreen({navigation}) {
+export default function RegisterScreen({navigation}) {
+    const [page, setPage] = useState(0)
       const handleReg = () => {
-        navigation.navigate('Register', {
+        navigation.navigate('login', {
         });
+      }
+      const handleNext = () => {
+        setPage(1)
       }
     return (
       <>
-      <SafeAreaView style={styles.safeAreaView}>  
-                <View style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <Image source={require('../../../../assets/images/Logo.png')} style={styles.logo_Middle} resizeMode='contain'></Image>
-                  <Text style={styles.Title}>Lucilapp</Text>
-                </View>
+      <SafeAreaView style={styles.safeAreaView}>
+        <Text style={styles.Title}>Registrarse</Text>
+      {page === 0 ? <>
                 <View style={styles.container}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Usuario"
+                        placeholder="Nombre completo"
                         placeholderTextColor="#C0C0C0"
                     />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Mail"
+                        placeholderTextColor="#C0C0C0"
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Telefono"
+                        placeholderTextColor="#C0C0C0"
+                    />
+                </View>
+                <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                  <TouchableOpacity style={styles.button} onPress={handleNext}>
+                    <Text style={styles.buttonText}>Siguiente</Text>
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity onPress={handleReg}>
+                  <Text style={styles.TextLink}>Ya tengo cuenta</Text>
+                </TouchableOpacity>
+                
+                </>
+                
+        :
+        
+        <>
+            <View style={styles.container}>
                     <TextInput
                         style={styles.input}
                         placeholder="Contraseña"
                         placeholderTextColor="#C0C0C0"
                     />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Confirmar contraseña"
+                        placeholderTextColor="#C0C0C0"
+                    />
                 </View>
                 <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                  <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Iniciar Sesión</Text>
+                  <TouchableOpacity style={styles.button} onPress={handleNext}>
+                    <Text style={styles.buttonText}>Siguiente</Text>
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={handleReg}>
-                  <Text style={styles.TextLink}>No tengo cuenta</Text>
+                  <Text style={styles.TextLink}>Ya tengo cuenta</Text>
                 </TouchableOpacity>
+        </>
+        }
         </SafeAreaView>
-    </>
+      </>
     );
   }
   
@@ -62,8 +97,9 @@ export default function LoginScreen({navigation}) {
       fontWeight: 'bold',
   },
     Title:{
-      fontSize: 30,
+      fontSize: 50,
       fontWeight: 500,
+      marginTop: '10%',
     },
     safeAreaView:{
       marginTop: 10,
@@ -90,7 +126,7 @@ export default function LoginScreen({navigation}) {
         width: '75%',
     },
     input: {
-        marginTop: 10,
+        marginTop: 40,
         height: 40,
         backgroundColor: '#F8F8F8',
         borderRadius: 20,
@@ -105,8 +141,8 @@ export default function LoginScreen({navigation}) {
         elevation: 3,
     },
     TextLink: {
-      textDecorationLine: 'underline',
-      marginTop: -30,
-      fontWeight: 500
-    }
+        textDecorationLine: 'underline',
+        marginTop: -60,
+        fontWeight: 500
+      }
   });
