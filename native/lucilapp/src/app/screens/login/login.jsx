@@ -1,11 +1,28 @@
 import { Image, StyleSheet, Platform, View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
+import apiUserCalls from '../../../api/apiUserCalls';
 
 
 export default function LoginScreen({navigation}) {
+      const [nombre, setNombre] = useState('');
+      const handleNombreChange = (text) => {
+        setNombre(text);
+      };
+      const [contraseña, setContraseña] = useState('');
+      const handleContraChange = (text) => {
+        setContraseña(text);
+      };
       const handleReg = () => {
         navigation.navigate('Register', {
         });
+      }
+      const handleLogin = async () => {
+        let token = await apiUserCalls.apiCallLogin(nombre, contraseña)
+        if(token){
+          console.log(token)
+          navigation.navigate('index', {
+          });
+        }
       }
     return (
       <>
@@ -19,15 +36,19 @@ export default function LoginScreen({navigation}) {
                         style={styles.input}
                         placeholder="Usuario"
                         placeholderTextColor="#C0C0C0"
+                        value={nombre}
+                        onChangeText={handleNombreChange}
                     />
                     <TextInput
                         style={styles.input}
                         placeholder="Contraseña"
                         placeholderTextColor="#C0C0C0"
+                        value={contraseña}
+                        onChangeText={handleContraChange}
                     />
                 </View>
                 <View style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity onPress={handleLogin} style={styles.button}>
                     <Text style={styles.buttonText}>Iniciar Sesión</Text>
                   </TouchableOpacity>
                 </View>

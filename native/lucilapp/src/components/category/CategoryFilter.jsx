@@ -46,10 +46,11 @@ const styles = StyleSheet.create({
         height: 25,
     },
     filterContainer:{
-        width: 390,
-        top: 30,
+        position: 'absolute',
+        width: '80vw',
+        top: 40,
+        right: '5vw',
         backgroundColor:"#82bdfa90",
-        marginBottom:30,
         borderRadius: 20,
     },
     filterText:{

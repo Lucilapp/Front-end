@@ -7,7 +7,8 @@ import apiCallGET from '../../api/apiCalls.js';
 const CategoryList = ({ navigation, categories }) => {
   const [task, setTask] = useState(null);
   const [results, setResults] = useState([]);
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
+  const [noTasks, setNoTasks] = useState(true);
   async function fetchTask(catId) {
     if(!loaded){
       
@@ -25,6 +26,11 @@ const CategoryList = ({ navigation, categories }) => {
   useEffect(() => {
     filtrarArray(categories.returnArray)
   }, [])
+  useEffect(() => {
+    if(results.length > 0){
+      setNoTasks(false);
+    }
+  },[results])
 
   return (
     <>
@@ -43,7 +49,8 @@ const CategoryList = ({ navigation, categories }) => {
         }}
         contentContainerStyle={styles.container}
       />
-      {results.length <= 0 ? <Text>No hay Tareas disponibles</Text>:<></>}
+      {console.log(results.length)}
+      {noTasks ? <Text style={styles.noTasks}>No hay Tareas disponibles</Text>:<></>}
     </>
   );
 };
@@ -54,6 +61,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingVertical: 10,
   },
+  noTasks: {
+    fontSize: 25,
+    fontWeight: 600,
+    alignSelf: 'center',
+    color: '#C0C0C0'
+  }
 });
 
 export default CategoryList;

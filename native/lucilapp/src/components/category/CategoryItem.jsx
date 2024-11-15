@@ -35,8 +35,6 @@ const CategoryItem = ({ name, pending, id }) => {
     if(task) {
       let date = Date.now()
       date = new Date(date)
-      console.log(date)
-      console.log(task.TiempoCreacion)
       let creacion = new Date(task.TiempoCreacion)
       setTime(Math.round((date - creacion)/60000));
     }

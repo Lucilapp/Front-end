@@ -26,10 +26,6 @@ export default function HomeScreen({navigation}) {
       }
       fetchCat();
     }, [start])
-    const handlePress = () => {
-      navigation.navigate('Register', {
-      });
-    }
     return (
       <>
         {!loading && (<>
@@ -44,9 +40,6 @@ export default function HomeScreen({navigation}) {
               <CategoryList categories = {results}/>
             </View>
             <View style={styles.footer}>
-              <TouchableOpacity onPress={handlePress}>
-                <Text>Register</Text>
-              </TouchableOpacity>
             </View>
           </SafeAreaView>
           <NavBar></NavBar>
@@ -72,6 +65,7 @@ export default function HomeScreen({navigation}) {
       alignItems: 'flex-end'
     },
     filterContainer: {
+      zIndex: 10,
       position: 'absolute',
       top: 10,
       width: '95%',
