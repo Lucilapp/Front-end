@@ -190,9 +190,10 @@ export default function RegisterScreen({navigation}) {
     container: {
         padding: 10,
         width: '75%',
+        
     },
     input: {
-        marginTop: 40,
+        marginTop: '5vw',
         height: 40,
         backgroundColor: '#F8F8F8',
         borderRadius: 20,
@@ -208,7 +209,7 @@ export default function RegisterScreen({navigation}) {
     },
     TextLink: {
         textDecorationLine: 'underline',
-        marginTop: -40,
+        marginTop: '-7vw',
         fontWeight: 500
       }
   });

@@ -15,8 +15,8 @@ const BackArrow = ({onPress}) => {
 const styles = StyleSheet.create({
     arrowImg: {
         resizeMode: 'contain',
-        width: 30,
-        height: 30
+        width: '7vw',
+        height: '7vw'
     }
 })
 

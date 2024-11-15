@@ -104,7 +104,7 @@ export default function LoginScreen({navigation}) {
       height: 20,
     },
     logo_Middle: {
-        width: 250,
+        height: '50vw'
     },
     container: {
         padding: 10,
