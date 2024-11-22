@@ -16,21 +16,19 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-  return (
+  return (  
     <>
      <NavigationContainer>
        <Stack.Navigator initialRouteName="login">
          <Stack.Screen name="index" component={HomeScreen} options={{headerShown: false}} />  
          <Stack.Screen name="task" component={TaskScreen} options={{headerShown: false}} />
-         <Stack.Screen name="chat" component={ChatScreen} options={{headerShown: true}}/>
+         <Stack.Screen name="chat" component={ChatScreen} options={{headerShown: false}}/>
          <Stack.Screen name='login' component={LoginScreen} options={{headerShown: false}}/>
          <Stack.Screen name='Register' component={RegisterScreen} options={{headerShown: false}}/>
        </Stack.Navigator>
      </NavigationContainer>
      </>
-
     //<SocketTest></SocketTest>
-    
   );
 }
 

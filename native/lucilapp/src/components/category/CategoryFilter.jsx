@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     filterContainer:{
         position: 'absolute',
         width: '80vw',
-        top: 40,
+        top: 50,
         right: '5vw',
         backgroundColor:"#82bdfa90",
         borderRadius: 20,

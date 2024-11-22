@@ -27,10 +27,18 @@ export default function RegisterScreen({navigation}) {
       setMail(text);
     };
     const handleTelChange = (text) => {
-      setTelefono(text);
+      if (/^\d*$/.test(text)) {
+        setTelefono(text);
+      }
     };
     const handleDNIChange = (text) => {
-      setDni(text);
+      if (/^\d*$/.test(text)) {
+        setDni(text);
+      }
+    };
+    const validateMail = (email) => {
+      const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+      return regex.test(email);
     };
 
 
@@ -43,15 +51,16 @@ export default function RegisterScreen({navigation}) {
       if(reg){
         let token = await apiUserCalls.apiCallLogin(nombre, contraseña)
         if(token){
-          console.log(token)
-          navigation.navigate('index', {
+          navigation.navigate('login', {
           });
         }
       }
     }
 
     const handleNext = () => {
-      setPage(1)
+      if(validateMail(mail)){
+        setPage(1)
+      }
     }
     const handlePrev = () => {
       setPage(0)
@@ -75,6 +84,7 @@ export default function RegisterScreen({navigation}) {
                         placeholder="DNI"
                         placeholderTextColor="#C0C0C0"
                         value={dni}
+                        inputMode='numeric'
                         onChangeText={handleDNIChange}
                     />
                     <TextInput
@@ -89,6 +99,7 @@ export default function RegisterScreen({navigation}) {
                         placeholder="Telefono Ej: 1112345678"
                         placeholderTextColor="#C0C0C0"
                         value={telefono}
+                        inputMode='numeric'
                         onChangeText={handleTelChange}
                     />
                 </View>
@@ -115,6 +126,7 @@ export default function RegisterScreen({navigation}) {
                         placeholder="Contraseña"
                         placeholderTextColor="#C0C0C0"
                         value={contraseña}
+                        secureTextEntry={true}
                         onChangeText={handleContraChange}
                     />
                     <TextInput
@@ -122,6 +134,7 @@ export default function RegisterScreen({navigation}) {
                         placeholder="Confirmar contraseña"
                         placeholderTextColor="#C0C0C0"
                         value={contraseñaVerif}
+                        secureTextEntry={true}
                         onChangeText={handleContraVerifChange}
                     />
                 </View>

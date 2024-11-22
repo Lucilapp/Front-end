@@ -2,9 +2,9 @@ import axios from "axios";
 const ip = "localhost";
 const port= "3000";
 const baseUrl = `http://${ip}:${port}/api/`;
-const apiCallLogin = async (nombre, contrasenia) => {
+const apiCallLogin = async (mail, contrasenia) => {
   const url = `${baseUrl}usuario/login`;
-  const data = { nombre, contrasenia };
+  const data = { mail, contrasenia };
 
   let result;
   try {

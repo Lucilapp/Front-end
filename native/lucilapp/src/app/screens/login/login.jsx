@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform, View, Text, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Platform, View, Text, SafeAreaView, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useEffect, useState } from 'react';
 import apiUserCalls from '../../../api/apiUserCalls';
 
@@ -23,6 +23,9 @@ export default function LoginScreen({navigation}) {
           navigation.navigate('index', {
           });
         }
+        else{
+          alert('Los datos ingresados son incorrectos');
+        }
       }
     return (
       <>
@@ -34,12 +37,13 @@ export default function LoginScreen({navigation}) {
                 <View style={styles.container}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Usuario"
+                        placeholder="Mail"
                         placeholderTextColor="#C0C0C0"
                         value={nombre}
                         onChangeText={handleNombreChange}
                     />
                     <TextInput
+                        secureTextEntry={true}
                         style={styles.input}
                         placeholder="Contraseña"
                         placeholderTextColor="#C0C0C0"

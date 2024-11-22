@@ -9,11 +9,6 @@ const CategoryList = ({ navigation, categories }) => {
   const [results, setResults] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [noTasks, setNoTasks] = useState(true);
-  async function fetchTask(catId) {
-    if(!loaded){
-      
-    }
-  }
   const filtrarArray = (array) => {
     let result = [];
     array.forEach(element => {
@@ -49,7 +44,6 @@ const CategoryList = ({ navigation, categories }) => {
         }}
         contentContainerStyle={styles.container}
       />
-      {console.log(results.length)}
       {noTasks ? <Text style={styles.noTasks}>No hay Tareas disponibles</Text>:<></>}
     </>
   );

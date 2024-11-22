@@ -121,6 +121,7 @@ export default function ChatScreen(props) {
 };
 
   const flatListRef = useRef(null);
+  
   const handleScrollToEnd = () => {
     flatListRef.current.scrollToEnd({ animated: true });
   };
@@ -149,7 +150,6 @@ export default function ChatScreen(props) {
 
   return (
     <>
-        
         <View style={styles.header}>
             <Text style={styles.headerText}>{user.Nombre}</Text>
         </View>
@@ -237,6 +237,9 @@ export default function ChatScreen(props) {
 }
 
 const styles = StyleSheet.create({
+  mensajes: {
+    flex: 1,
+  },
   closeButtonText: {
     fontSize: 24,
     color: 'black',
@@ -294,7 +297,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   footer: {
-    height: 375, 
+    height: 125, 
   },
   sendIcon: {
     width: 30,
